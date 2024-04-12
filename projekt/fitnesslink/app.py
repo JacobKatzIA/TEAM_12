@@ -118,9 +118,11 @@ def get_training_log():
         database="ap2204"
       )
       cursor = connection.cursor()
+
       cursor.execute('INSERT INTO Workouts (m_id, Date) VALUES (%s, %s) RETURNING WorkoutID',
                      (m_id, date))
       workout_id =cursor.fetchone()[0]
+
       
       cursor.execute('INSERT INTO WorkoutDetails (WorkoutID, ExerciseID, Weight, Repetitions, Sets) VALUES (%s, %s, %s, %s, %s)',
                      (workout_id, exercise_id, weight, repetitions, sets))
