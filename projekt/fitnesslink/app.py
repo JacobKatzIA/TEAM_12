@@ -98,8 +98,16 @@ def meal():
       
     return render_template('meal.html')
   
-@app.route('get_training_log')
+@app.route('get_training_log', methods=['GET', 'POST'])
 def get_training_log():
+  if request.method == 'POST':
+    m_id = request.form['m_id']
+    date = request.form['date']
+    exercise_id = request.form['exercise_id']
+    weight = request.form['weight']
+    repetitions = request.form['repetitions']
+    sets = request.form['sets']
+    
     try:
       connection = psycopg2.connect(
         user="ap2204",
@@ -109,7 +117,31 @@ def get_training_log():
         database="ap2204"
       )
       cursor = connection.cursor()
-      cursor.execute('SELECT * FROM Workouts JOIN members ON Workouts.m_id = members.m_id;')
+      cursor.execute('INSERT INTO Workouts (M_id, Date, ExerciseID, Weight, Repetitions, Sets) VALUES (%s, %s, %s, %s, %s, %s)',
+                     (m_id, date, exercise_id, weight, repetitions, sets))
+      connection.commit()
+      cursor.close()
+      connection.close()
+      return redirect('/get_training_log')
+      
+    except (Exception, Error) as error:
+      print("Fel vid inhämtning av träningsloggar:", error)
+      return "Kunde inte hämta träningsloggar."
+    finally:
+      if connection:
+        cursor.close()
+        connection.close()
+  else:
+    try:
+      connection = psycopg2.connect(
+        user="ap2204",
+        password="if7fupb5",
+        host="pgserver.mau.se",
+        port="5432",
+        database="ap2204"
+      )
+      cursor = connection.cursor()
+      cursor.execute('SELECT * FROM Workouts JOIN Members ON Workouts.m_id = members.m_id;')
       workouts = cursor.fetchall()
       cursor.close()
       connection.close()
