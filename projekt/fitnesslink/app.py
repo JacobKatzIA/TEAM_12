@@ -97,6 +97,31 @@ def meal():
             connection.close()
       
     return render_template('meal.html')
+  
+@app.route('get_training_log')
+def get_training_log():
+    try:
+      connection = psycopg2.connect(
+        user="ap2204",
+        password="if7fupb5",
+        host="pgserver.mau.se",
+        port="5432",
+        database="ap2204"
+      )
+      cursor = connection.cursor()
+      cursor.execute('SELECT * FROM Workouts JOIN members ON Workouts.m_id = members.m_id;')
+      workouts = cursor.fetchall()
+      cursor.close()
+      connection.close()
+      return render_template('get_training_log.html', workouts=workouts)
+      
+    except (Exception, Error) as error:
+      print("Fel vid inhämtning av träningsloggar:", error)
+      return "Kunde inte hämta träningsloggar."
+    finally:
+      if connection:
+        cursor.close()
+        connection.close()
 
 if __name__ == '__main__':
    app.run(debug=True)

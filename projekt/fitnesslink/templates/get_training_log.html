@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Träningsloggar</title>
+</head>
+<body>
+    <h1>Träningsloggar</h1>
+    <ul>
+        {% for workout in workouts %}
+            <li>{{ workout['username'] }} - {{ workout['date'] }}</li>
+        {% endfor %}    
+    </ul>
+    
+</body>
+</html>
