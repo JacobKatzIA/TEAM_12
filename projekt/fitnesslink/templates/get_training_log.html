@@ -7,6 +7,23 @@
 </head>
 <body>
     <h1>Träningsloggar</h1>
+
+    <form action="/log" method="post">
+        <label for="m_id">Användar-ID:</label>
+        <input type="text" id="m_id" name="m_id">
+        <label for="date">Datum:</label>
+        <input type="date" id="date" name="date">
+        <label for="exercise_id">Övnings-ID:</label>
+        <input type="text" id="exercise_id" name="exercise_id">
+        <label for="weight">Vikt:</label>
+        <input type="text" id="weight" name="weight">
+        <label for="repetitions">Repetitioner:</label>
+        <input type="number" id="repetitions" name="repetitions">
+        <label for="sets">Set:</label>
+        <input type="number" id="sets" name="sets">
+        <input type="submit" value="Logga pass">
+    </form>
+
     <ul>
         {% for workout in workouts %}
             <li>{{ workout['username'] }} - {{ workout['date'] }}</li>
