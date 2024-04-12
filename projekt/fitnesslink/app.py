@@ -48,7 +48,7 @@ def register_member(fullname, username, password, email):
 def index():
   return render_template('index.html')
 
-@app.route('\submit', methods=['POST'])
+@app.route('/submit', methods=['POST'])
 def submit():
     fullname = request.form['fullname']
     username = request.form['username']
@@ -61,7 +61,7 @@ def submit():
 
 
 
-@app.route('\meal', methods=['GET', 'POST'])
+@app.route('/meal', methods=['GET', 'POST'])
 def meal():
     if request.method == 'POST':
       meal_id = request.form['meal_id']
@@ -98,7 +98,7 @@ def meal():
       
     return render_template('meal.html')
   
-@app.route('get_training_log', methods=['GET', 'POST'])
+@app.route('/get_training_log', methods=['GET', 'POST'])
 def get_training_log():
   if request.method == 'POST':
     m_id = request.form['m_id']
