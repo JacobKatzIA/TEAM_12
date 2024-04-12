@@ -61,14 +61,13 @@ def submit():
 
 
 
-@app.route('/meal', methods=['GET', 'POST'])
+@app.route('/meal.html', methods=['POST', 'GET'])
 def meal():
     if request.method == 'POST':
-      meal_id = request.form['meal_id']
       m_id = request.form['m_id']
+      meal_id = request.form['meal_id']
       calories_per_meal = request.form['calories_per_meal']
       date = request.form['date']
-      meal_type_id = request.form['meal_type_id']
 
       try:
           connection = psycopg2.connect(
@@ -81,12 +80,12 @@ def meal():
           cursor = connection.cursor()
 
           cursor.execute(
-            "INSERT INTO meal (meal_id, m_id, calories_per_meal, date, meal_type_id) VALUES (%s, %s, %s, %s, %s)",
-            (meal_id, m_id, calories_per_meal, date, meal_type_id)
+            "INSERT INTO meal (m_id, meal_id, calories_per_meal, date) VALUES (%s, %s, %s, %s)",
+            (m_id, meal_id,calories_per_meal, date)
          )
 
           connection.commit()
-          print("Din måltid registrerades korrekt")
+          print("Din måltid registrerades")
           return redirect('/')
       except (Exception, Error) as error:
          print("Fel vid registrering av måltid:", error)
@@ -95,6 +94,7 @@ def meal():
          if connection:
             cursor.close()
             connection.close()
+
       
     return render_template('meal.html')
   
