@@ -173,8 +173,7 @@ def view_workouts(m_id):
         cursor.close()
         connection.close()
 
-
-def connect_to_database():
+def authenticate_user(username_or_email, password):
     try:
         # anslut till databas
         connection = psycopg2.connect(
@@ -184,17 +183,7 @@ def connect_to_database():
             port="5432",
             database="ap2204"
         )
-        return connection
-    except(Exception, psycopg2.Error) as error:
-        print("Anslutningen till PostgreSQL misslyckades", error)
-        return None
-
-def authenticate_user(username_or_email, password):
-    connection = connect_to_database()
-    if connection is None:
-        return None
       
-    try: 
         cursor = connection.cursor()
         sql_query = "SELECT username, email, password FROM users WHERE username = %s OR email = %s"
         cursor.execute(sql_query, (username_or_email, username_or_email))
@@ -217,7 +206,6 @@ def authenticate_user(username_or_email, password):
             cursor.close()
             connection.close()
 
-app = Flask(__name__)
 
 @app.route('/Login')
 def login():
