@@ -3,17 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lagra måltid</title>
+  <title>Logga måltider</title>
 </head>
 <body>
-  <form action="/submit" method="post">
-    <label for="meal_name">Meal name:</label><br>
-    <input type="text" id="meal_name" name="meal_name" required>
-    <br>
-    <br>
-    <label for="calories">Calories</label>
-    <lanel type="number" id="calories" name="calories"></label>
-    <input type="submit" value="Registrera">
+  <h2>Måltidsformulär</h2>
+  <form action="/meal" method="POST">
+    <label for="meal_id">Meal ID:</label>
+    <input type="text" id="meal_id" name="meal_id">
+
+    <label for="m_id">Member ID:</label>
+    <input type="text" id="m_id" name="m_id">
+
+    <label for="calories_per_meal">Calories per meal</label>
+    <input type="text" id="calories_per_meal" name="calories_per_meal">
+
+    <label for="date">Todays date:</label>
+    <input type="date" id="date" name="date">
+
+    <label for="meal_type_id">Måltids ID</label>
+    <input type="text" id="meal_type_id" name="meal_type_id">
+
+    <input type="submit" value="Submit">
   </form>
 </body>
 </html>

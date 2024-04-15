@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
     <title>Träningsloggar</title>
 </head>
 <body>
     <h1>Träningsloggar</h1>
 
-    <form action="/index.html" method="post">
+    <form action="/get_training_log" method="post">
         <label for="m_id">Användar-ID:</label>
         <input type="text" id="m_id" name="m_id">
         <label for="date">Datum:</label>
@@ -24,11 +25,6 @@
         <input type="submit" value="Logga pass">
     </form>
 
-    <ul>
-        {% for workout in workouts %}
-            <li>{{ workout['username'] }} - {{ workout['date'] }}</li>
-        {% endfor %}    
-    </ul>
-    
+    <a href="/view_workouts/6">Visa träningspass.</a>
 </body>
 </html>

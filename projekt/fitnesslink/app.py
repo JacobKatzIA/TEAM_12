@@ -98,7 +98,7 @@ def meal():
       
     return render_template('meal.html')
   
-@app.route('/get_training_log', methods=['GET', 'POST'])
+@app.route('/get_training_log', methods=['POST', 'GET'])
 def get_training_log():
   if request.method == 'POST':
     m_id = request.form['m_id']
@@ -108,6 +108,7 @@ def get_training_log():
     repetitions = request.form['repetitions']
     sets = request.form['sets']
     
+    connection = None
     try:
       connection = psycopg2.connect(
         user="ap2204",
@@ -117,21 +118,30 @@ def get_training_log():
         database="ap2204"
       )
       cursor = connection.cursor()
-      cursor.execute('INSERT INTO Workoutdetails (M_id, Date, ExerciseID, Weight, Repetitions, Sets) VALUES (%s, %s, %s, %s, %s, %s)',
-                     (m_id, date, exercise_id, weight, repetitions, sets))
-      connection.commit()
-      cursor.close()
-      connection.close()
-      return redirect('/get_training_log')
+
+      cursor.execute('INSERT INTO Workouts (m_id, Date) VALUES (%s, %s) RETURNING WorkoutID',
+                     (m_id, date))
+      workout_id =cursor.fetchone()[0]
+
       
-    except (Exception, Error) as error:
-      print("Fel vid inhämtning av träningsloggar:", error)
-      return "Kunde inte hämta träningsloggar."
+      cursor.execute('INSERT INTO WorkoutDetails (WorkoutID, ExerciseID, Weight, Repetitions, Sets) VALUES (%s, %s, %s, %s, %s)',
+                     (workout_id, exercise_id, weight, repetitions, sets))
+      connection.commit()
+      
+    except (Exception, psycopg2.Error) as error:
+        print("Fel vid inhämtning av träningsloggar:", error)
+        return "Kunde inte hämta träningsloggar. Fel: {}".format(error)
     finally:
       if connection:
         cursor.close()
         connection.close()
+      return redirect('/get_training_log')
+      
   else:
+    return render_template('get_training_log.html', workouts=None)
+
+@app.route('/view_workouts/<int:m_id>')
+def view_workouts(m_id):
     try:
       connection = psycopg2.connect(
         user="ap2204",
@@ -141,12 +151,20 @@ def get_training_log():
         database="ap2204"
       )
       cursor = connection.cursor()
-      cursor.execute('SELECT * FROM Workouts JOIN Members ON Workouts.m_id = members.m_id;')
+      cursor.execute('''
+      SELECT Workouts.Date, Exercises.Name, WorkoutDetails.Weight, WorkoutDetails.Repetitions, WorkoutDetails.Sets
+      FROM Workouts
+      JOIN WorkoutDetails ON Workouts.WorkoutID = WorkoutDetails.WorkoutID
+      JOIN Exercises ON WorkoutDetails.ExerciseID = Exercises.ExerciseID
+      WHERE Workouts.M_id = %s
+      ORDER BY Workouts.Date DESC;              
+      ''', (m_id,))
       workouts = cursor.fetchall()
+      
       cursor.close()
       connection.close()
-      return render_template('get_training_log.html', workouts=workouts)
       
+      return render_template('view_workouts.html', workouts=workouts, m_id=m_id)
     except (Exception, Error) as error:
       print("Fel vid inhämtning av träningsloggar:", error)
       return "Kunde inte hämta träningsloggar."
