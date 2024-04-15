@@ -155,7 +155,68 @@ def get_training_log():
         cursor.close()
         connection.close()
 
+
+def connect_to_database():
+    try:
+        # anslut till databas
+        connection = psycopg2.connect(
+            user="ap2204",
+            password="if7fuph5",
+            host="pgserver.mau.se",
+            port="5432",
+            database="ap2204"
+        )
+        return connection
+    except(Exception, psycopg2.Error) as error:
+        print("Anslutningen till PostgreSQL misslyckades", error)
+        return None
+
+def authenticate_user(username_or_email, password):
+    connection = connect_to_database()
+    if connection is None:
+        return None
+      
+    try: 
+        cursor = connection.cursor()
+        sql_query = "SELECT username, email, password FROM users WHERE username = %s OR email = %s"
+        cursor.execute(sql_query, (username_or_email, username_or_email))
+        user_info = cursor.fetchone()
+        
+        # om inget resultat hittades, returnera None
+        if user_info is None:
+            return None
+
+        if password == user_info[2]:
+            return {'username': user_info[0], 'email': user_info[1]}
+        else: 
+            return None
+    except (Exception, psycopg2.Error) as error:
+        print("Gick ej att hämta data från databasen", error)
+        return None
+    finally: 
+        # stäng anslutningen till databasen
+        if connection:
+            cursor.close()
+            connection.close()
+
+app = Flask(__name__)
+
+@app.route('/Login')
+def login():
+    # Användarens inmatning
+    input_username_or_email = input("Ange användarnamn eller e-post: ")
+    input_password = input("Ange lösenord: ")
+
+    # Försök autentisera användaren
+    authenticated_user = authenticate_user(input_username_or_email, input_password)
+    
+    # Om autentiseringen lyckades, logga in användaren
+    if authenticated_user:
+        return f"Välkommen {authenticated_user['username']}! Du är nu inloggad."
+    else:
+        return "Fel användarnamn, e-post eller lösenord. Försök igen."
+    
 if __name__ == '__main__':
-   app.run(debug=True)
-    
-    
+    app.run(debug=True)
+
+
