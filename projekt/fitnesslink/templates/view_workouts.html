@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Träningspass för användare {{ user_id }}</h1>
+    <table>
+        <tr>
+            <th>Datum</th>
+            <th>Övning</th>
+            <th>Vikt</th>
+            <th>Repetitioner</th>
+            <th>Set</th>
+        </tr>
+        {% for workout in workouts %}
+        <tr>
+            <td>{{ workout[0] }}</td>
+            <td>{{ workout[1] }}</td>
+            <td>{{ workout[2] }}</td>
+            <td>{{ workout[3] }}</td>
+            <td>{{ workout[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
