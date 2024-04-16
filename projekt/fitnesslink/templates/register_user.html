@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrera medlemmar</title>
+</head>
+<body>
+  <h2>Registrera medlemmar</h2>
+  <form action="/submit" method="post">
+    <label for="fullname">Fullständigt namn:</label>
+    <input type="text" id="fullname" name="fullname" required>
+    <label for="username">Användarnamn:</label>
+    <input type="text" id="username" name="username" required>
+    <label for="password">Lösenord:</label>
+    <input type="password" id="password" name="password" required>
+    <label for="email">Emailaddress:</label>
+    <input type="email" id="email" name="email" required>
+    <input type="submit" value="Registrera">
+  </form>
+  <a href="/get_training_log">Logga träning här.</a>
+  <a href="/meal">Logga måltider här.</a>
+</body>
+</html>

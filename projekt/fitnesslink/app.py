@@ -1,6 +1,6 @@
 import psycopg2
 from psycopg2 import Error
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -44,9 +44,9 @@ def register_member(fullname, username, password, email):
            connection.close()
     
 
-@app.route('/')
-def index():
-  return render_template('index.html')
+@app.route('/register_user')
+def register_user():
+  return render_template('register_user.html')
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -173,30 +173,27 @@ def view_workouts(m_id):
         cursor.close()
         connection.close()
 
-def authenticate_user(username_or_email, password):
+def authenticate_user(username, password):
     try:
         # anslut till databas
         connection = psycopg2.connect(
             user="ap2204",
-            password="if7fuph5",
+            password="if7fupb5",
             host="pgserver.mau.se",
             port="5432",
             database="ap2204"
         )
       
         cursor = connection.cursor()
-        sql_query = "SELECT username, email, password FROM users WHERE username = %s OR email = %s"
-        cursor.execute(sql_query, (username_or_email, username_or_email))
+        sql_query = "SELECT username, password FROM members WHERE username = %s AND password = %s"
+        cursor.execute(sql_query, (username, password))
         user_info = cursor.fetchone()
         
         # om inget resultat hittades, returnera None
         if user_info is None:
             return None
-
-        if password == user_info[2]:
-            return {'username': user_info[0], 'email': user_info[1]}
-        else: 
-            return None
+        return {'username': user_info[0]}
+            
     except (Exception, psycopg2.Error) as error:
         print("Gick ej att hämta data från databasen", error)
         return None
@@ -207,21 +204,31 @@ def authenticate_user(username_or_email, password):
             connection.close()
 
 
-@app.route('/Login')
-def login():
+@app.route('/', methods=['GET', 'POST'])
+def index():
+  if request.method == 'POST':
     # Användarens inmatning
-    input_username_or_email = input("Ange användarnamn eller e-post: ")
-    input_password = input("Ange lösenord: ")
+    username = request.form.get('username')
+    password = request.form.get('password')
 
     # Försök autentisera användaren
-    authenticated_user = authenticate_user(input_username_or_email, input_password)
+    authenticated_user = authenticate_user(username, password)
     
     # Om autentiseringen lyckades, logga in användaren
     if authenticated_user:
-        return f"Välkommen {authenticated_user['username']}! Du är nu inloggad."
-    else:
-        return "Fel användarnamn, e-post eller lösenord. Försök igen."
+        return redirect(url_for('start'))
     
+    else:
+        return "Fel användarnamn eller lösenord. Försök igen."
+  else:
+     return render_template('index.html')
+
+app.route('/start')
+def start():
+   return render_template('start.html')
+   
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
