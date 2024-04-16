@@ -1,0 +1,167 @@
+h1{
+    text-align: center;
+    color: whitesmoke;
+}
+
+h2{
+    text-align: center;
+    color: whitesmoke;
+    border-bottom: 3px dotted whitesmoke;
+}
+
+p{
+    color: whitesmoke;
+}
+
+body{
+background-color: black;
+}
+
+#container > nav{
+    padding-bottom: 50px;
+    background-color: darkred;
+    position: relative;
+    left: 0;
+}
+
+
+#container > nav > ul{
+    display: inline;
+    overflow: hidden;
+    margin: 30px;
+    padding: 0;
+    list-style-type: none;
+
+}
+
+#container > nav > ul > li{
+    float: left;
+
+}
+
+#container > nav > ul > li a{
+    display: block;
+    color: whitesmoke;
+    text-align: center;
+    padding: 25px 60px;
+    text-align: center;
+    text-decoration: none;
+    
+
+}
+
+#container > nav > ul > li a:hover{
+    background-color: wheat;
+}
+
+#container > main > p{
+    text-align: center;
+}
+
+#container > main > ul{
+    color: white;    
+    margin-left: 40%;
+
+}
+
+
+img{
+    float: left;
+    margin-top: 90px;
+    margin-left: 150px;
+    margin-bottom: 90px;
+}
+
+#container > main > form{
+    margin-top: 20px;
+    color: white;
+    margin-left: 43%;
+    margin-top: 50px;
+}
+
+#container > main > form > input{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 200px;
+    height: 30px;
+}
+
+.popcorn{
+    margin-left: 35%;
+    margin-bottom: 1%;
+    overflow: hidden;
+    
+}
+
+.kontaktbok{
+    margin-left: 42%;
+    margin-bottom: 1%;
+    overflow: hidden;
+}
+
+footer{
+    background-color: darkred;
+    width: 100%;
+    height: 50px;
+    bottom: 0;
+    left: 0;
+    margin-top: 500px;
+    position: relative ;
+    text-align: center;
+    overflow: hidden;
+}
+
+footer > p{
+    color: whitesmoke;
+    text-align: center;
+}
+
+@media only screen and (max-width: 550px){
+    h1{
+        text-align: center;
+        color: whitesmoke;
+    }
+
+    #container > nav > ul > li{
+        display: block;
+        width: 100%;
+    }
+
+    #container > main > p{
+        text-align: center;
+    }
+
+    #container > main > ul{
+        color: white;    
+        margin-left: 40%;
+    
+    }
+    .popcorn{
+        margin-left: 10%;
+        margin-bottom: 1%;
+        overflow: hidden;
+        
+    }
+    #container > main > img{
+        width: auto;
+        display: none;
+    }
+    container > main > form{
+        margin-left: 10px;
+
+    }
+    
+    #container > main > form > input{
+        margin-left: 10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
