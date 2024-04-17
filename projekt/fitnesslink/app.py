@@ -28,7 +28,7 @@ def register_member(fullname, username, password, email):
 
         next_id = latest_id + 1
 
-        cursor.execute("INSERT INTO members (m_id, fullname, password, email) VALUES (%s, %s, %s, %s, %s)",
+        cursor.execute("INSERT INTO members (m_id, fullname, username, password, email) VALUES (%s, %s, %s, %s, %s)",
                       (next_id, fullname, username, password, email))
       
         connection.commit()
@@ -68,7 +68,6 @@ def meal():
       m_id = request.form['m_id']
       calories_per_meal = request.form['calories_per_meal']
       date = request.form['date']
-      meal_type_id = request.form['meal_type_id']
 
       try:
           connection = psycopg2.connect(
@@ -81,13 +80,12 @@ def meal():
           cursor = connection.cursor()
 
           cursor.execute(
-            "INSERT INTO meal (meal_id, m_id, calories_per_meal, date, meal_type_id) VALUES (%s, %s, %s, %s, %s)",
-            (meal_id, m_id, calories_per_meal, date, meal_type_id)
+            "INSERT INTO meal (meal_id, m_id, calories_per_meal, date) VALUES (%s, %s, %s, %s)",
+            (meal_id, m_id, calories_per_meal, date)
          )
-
           connection.commit()
           print("Din måltid registrerades korrekt")
-          return redirect('/')
+          return redirect('/meal')
       except (Exception, Error) as error:
          print("Fel vid registrering av måltid:", error)
          return "Din registrering av måltiden misslyckades"
@@ -227,6 +225,37 @@ def index():
 def start():
    return render_template('start.html')
    
+
+@app.route('/view_meals/<int:m_id>')
+def view_meals(m_id):
+    try:
+      connection = psycopg2.connect(
+        user="ap2204",
+        password="if7fupb5",
+        host="pgserver.mau.se",
+        port="5432",
+        database="ap2204"
+      )
+      cursor = connection.cursor()
+      cursor.execute('''
+      SELECT Meal.meal_id, Meal.m_id, Meal.calories_per_meal, Meal.date
+      FROM Meal
+      WHERE Meal.M_id = %s
+      ORDER BY Meal.Date DESC;              
+      ''', (m_id,))
+      meal = cursor.fetchall()
+      
+      cursor.close()
+      connection.close()
+      
+      return render_template('view_meals.html', meal=meal, m_id=m_id)
+    except (Exception, Error) as error:
+      print("Fel vid inhämtning av träningsloggar:", error)
+      return "Kunde inte hämta träningsloggar."
+    finally:
+      if connection:
+        cursor.close()
+        connection.close()
 
 
 if __name__ == '__main__':

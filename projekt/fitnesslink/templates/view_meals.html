@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Måltider för användare {{ user_id }}</h1>
+    <table>
+        <tr>
+            <th>MåltidsID</th>
+            <th>MedlemsID</th>
+            <th>Kalorier</th>
+            <th>Datum</th>
+        </tr>
+        {% for meal in meal %}
+        <tr>
+            <td>{{ meal[0] }}</td>
+            <td>{{ meal[1] }}</td>
+            <td>{{ meal[2] }}</td>
+            <td>{{ meal[3] }}</td>
+            <td>{{ meal[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
