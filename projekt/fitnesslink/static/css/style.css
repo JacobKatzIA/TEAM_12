@@ -65,13 +65,6 @@ background-color: black;
 }
 
 
-img{
-    float: left;
-    margin-top: 90px;
-    margin-left: 150px;
-    margin-bottom: 90px;
-}
-
 #container > main > form{
     margin-top: 20px;
     color: white;
