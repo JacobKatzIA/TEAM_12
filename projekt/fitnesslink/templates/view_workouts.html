@@ -1,29 +1,47 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',
+    filename='css/style.css') }}">
+    <title>Träningslogg</title>
 </head>
+
 <body>
-    <h1>Träningspass för användare {{ user_id }}</h1>
-    <table>
-        <tr>
-            <th>Datum</th>
-            <th>Övning</th>
-            <th>Vikt</th>
-            <th>Repetitioner</th>
-            <th>Set</th>
-        </tr>
-        {% for workout in workouts %}
-        <tr>
-            <td>{{ workout[0] }}</td>
-            <td>{{ workout[1] }}</td>
-            <td>{{ workout[2] }}</td>
-            <td>{{ workout[3] }}</td>
-            <td>{{ workout[4] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div id="container">
+        <header>
+            <h1>Träningspass för användare {{ user_id }}</h1>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="/start">Hem</a></li>
+                <li><a href="/get_training_log">Träna</a></li>
+                <li><a href="/meal">Mat</a></li>
+            </ul>
+        </nav>
+
+        <table>
+            <tr>
+                <th>Datum</th>
+                <th>Övning</th>
+                <th>Vikt</th>
+                <th>Repetitioner</th>
+                <th>Set</th>
+            </tr>
+            {% for workout in workouts %}
+            <tr>
+                <td>{{ workout[0] }}</td>
+                <td>{{ workout[1] }}</td>
+                <td>{{ workout[2] }}</td>
+                <td>{{ workout[3] }}</td>
+                <td>{{ workout[4] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 </body>
+
 </html>

@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FitnessLink</title>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static',
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitnessLink</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',
   filename='css/style.css') }}">
 </head>
 
 <body>
     <div id="container">
-    <header>
-        <h1>Välkommen till FitnessLink</h1>
-    </header>
+        <header>
+            <h1>Välkommen till FitnessLink</h1>
+        </header>
 
-    <nav>
-        <ul>
-            <li><a href="/index">Hem</a></li>
-            <li><a href="/get_training_log">Träna</a></li>
-            <li><a href="/meal">Mat</a></li>
-        </ul>
-    </nav>
-    <main>
-        <h2>Vi som älskar träning!</h2>
-        <p>Vi älskar träning!</p>
+        <nav>
+            <ul>
+                <li><a href="/start">Hem</a></li>
+                <li><a href="/get_training_log">Träna</a></li>
+                <li><a href="/meal">Mat</a></li>
+            </ul>
+        </nav>
+        <main>
+            <h2>Vi som älskar träning!</h2>
+            <p>Vi älskar träning!</p>
             <p>På denna webbplats kan ni:</p>
             <ul>
                 <li>Logga träningspass</li>
@@ -31,15 +32,16 @@
                 <li>Hitta enkla och näringsrika recept</li>
             </ul>
 
-    </main>
+        </main>
 
-    <img src="{{ url_for('static', filename='images/image.fitnesslink.png') }}" class="popcorn"/>
+        <img src="{{ url_for('static', filename='images/image.fitnesslink.png') }}" class="popcorn" />
 
 
-    <footer>
-        <p>Coypright 2023</p>
-    </footer>
+        <footer>
+            <p>Coypright 2023</p>
+        </footer>
 
-</div>
+    </div>
 </body>
+
 </html>

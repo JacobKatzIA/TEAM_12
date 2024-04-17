@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',
+  filename='css/style.css') }}">
   <title>Registrera medlemmar</title>
 </head>
+
 <body>
-  <h2>Registrera medlemmar</h2>
+  <header>
+    <h1>Registrera medlemmar</h1>
+  </header>
+
   <form action="/submit" method="post">
     <label for="fullname">Fullständigt namn:</label>
     <input type="text" id="fullname" name="fullname" required>
@@ -18,7 +24,5 @@
     <input type="email" id="email" name="email" required>
     <input type="submit" value="Registrera">
   </form>
-  <a href="/get_training_log">Logga träning här.</a>
-  <a href="/meal">Logga måltider här.</a>
 </body>
 </html>

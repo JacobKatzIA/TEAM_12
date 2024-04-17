@@ -1,29 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',
+  filename='css/style.css') }}">
   <title>Logga måltider</title>
 </head>
+
 <body>
-  <h2>Måltidsformulär</h2>
-  <form action="/meal" method="POST">
-    <label for="meal_id">Meal ID:</label>
-    <input type="text" id="meal_id" name="meal_id">
+  <div id="container">
+    <header>
+      <h1>Måltidsformulär</h1>
+    </header>
 
-    <label for="m_id">Member ID:</label>
-    <input type="text" id="m_id" name="m_id">
+    <nav>
+      <ul>
+        <li><a href="/start">Hem</a></li>
+        <li><a href="/get_training_log">Träna</a></li>
+        <li><a href="/meal">Mat</a></li>
+      </ul>
+    </nav>
 
-    <label for="calories_per_meal">Calories per meal</label>
-    <input type="text" id="calories_per_meal" name="calories_per_meal">
+    <form action="/meal" method="POST">
+      <label for="meal_id">Meal ID:</label>
+      <input type="text" id="meal_id" name="meal_id">
 
-    <label for="date">Todays date:</label>
-    <input type="date" id="date" name="date">
+      <label for="m_id">Member ID:</label>
+      <input type="text" id="m_id" name="m_id">
 
-    <label for="meal_type_id">Måltids ID:</label>
-    <input type="text" id="meal_type_id" name="meal_type_id">
+      <label for="calories_per_meal">Calories per meal</label>
+      <input type="text" id="calories_per_meal" name="calories_per_meal">
 
-    <input type="submit" value="Submit">
-  </form>
+      <label for="date">Todays date:</label>
+      <input type="date" id="date" name="date">
+
+      <label for="meal_type_id">Måltids ID:</label>
+      <input type="text" id="meal_type_id" name="meal_type_id">
+
+      <input type="submit" value="Submit">
+    </form>
+  </div>
 </body>
+
 </html>
