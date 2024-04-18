@@ -5,4 +5,13 @@ Programmet startas i VSCode --> starta programmet i "app.py" och följ länken s
 
 Väl inne på startsidan, finns en navbar med olika innehåll som ni gärna får testa!
 
+Python:
+https://github.com/JacobKatzIA/TEAM_12/blob/035de336afed1ae73728a3fc58c2d4d323673eaa/projekt/fitnesslink/app.py
+
+HTML:
+https://github.com/JacobKatzIA/TEAM_12/tree/035de336afed1ae73728a3fc58c2d4d323673eaa/projekt/fitnesslink/templates
+
+CSS:
+https://github.com/JacobKatzIA/TEAM_12/tree/035de336afed1ae73728a3fc58c2d4d323673eaa/projekt/fitnesslink/static/css
+
 Mvh Grupp12.
