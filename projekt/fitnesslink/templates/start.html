@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="sv">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FitnessLink</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',
-  filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
     <div id="container">
         <header>
             <h1>Välkommen till FitnessLink</h1>
+            <button onclick="window.location = 'http://127.0.0.1:5000'" type="submit">Logga ut</button>
         </header>
-
         <nav>
             <ul>
                 <li><a href="/start">Hem</a></li>
@@ -33,8 +30,7 @@
             </ul>
 
         </main>
-
-        <img src="{{ url_for('static', filename='images/image.fitnesslink.png') }}" class="popcorn" />
+        <img src="/fll.png" class="popcorn" />
 
 
         <footer>
