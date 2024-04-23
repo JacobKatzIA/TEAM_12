@@ -2,7 +2,8 @@ import psycopg2
 from psycopg2 import Error
 from flask import Flask, render_template, request, redirect, url_for, session
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
+
 
 def register_member(fullname, username, password, email):
     try:
@@ -257,6 +258,13 @@ def view_meals(m_id):
         cursor.close()
         connection.close()
 
+@app.route('/droppsession')
+def droppsession():
+    session.pop('user', None)
+    return render_template('index.html')
+
+
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
