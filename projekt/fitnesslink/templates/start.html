@@ -11,8 +11,9 @@
 
 <body>
     <div id="container">
+
         <header>
-            <img src="{{ url_for('static', filename='static/image.fitnesslink.png') }}" alt="Fitnesslink.logo">
+        
         </header>
 
         <nav>
@@ -21,24 +22,15 @@
                 <li><a href="/get_training_log">Träna</a></li>
                 <li><a href="/meal">Mat</a></li>
             </ul>
+            <img src="{{ url_for('static', filename='static/image.fitnesslink.png') }}" alt="Fitnesslink.logo" class="nav-logo">
         </nav>
         <main>
             <h2>Vi som älskar träning!</h2>
             <p>Vi älskar träning!</p>
-            <p>På denna webbplats kan ni:</p>
-            <ul>
-                <li>Logga träningspass</li>
-                <li>Registrera kaloriintag</li>
-                <li><a href="/view_workouts/6">Visa träningspass.</a></li>
-            </ul>
-
         </main>
 
-        <img src="{{ url_for('static', filename='static/image.fitnesslink.png') }}" class="popcorn" />
-
-
         <footer>
-            <p>Coypright 2023</p>
+            <p>Coypright 2024</p>
         </footer>
 
     </div>

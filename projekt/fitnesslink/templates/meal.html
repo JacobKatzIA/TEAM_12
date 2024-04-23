@@ -11,35 +11,39 @@
 
 <body>
   <div id="container">
-    <header>
-      <h1>Måltidsformulär</h1>
-    </header>
-
     <nav>
       <ul>
         <li><a href="/start">Hem</a></li>
         <li><a href="/get_training_log">Träna</a></li>
         <li><a href="/meal">Mat</a></li>
       </ul>
+      <img src="{{ url_for('static', filename='static/image.fitnesslink.png') }}" alt="Fitnesslink.logo"
+        class="nav-logo">
     </nav>
 
-    <form action="/meal" method="POST">
-      <label for="meal_id">Meal ID:</label>
-      <input type="text" id="meal_id" name="meal_id">
-
-      <label for="m_id">Member ID:</label>
-      <input type="text" id="m_id" name="m_id">
-
-      <label for="calories_per_meal">Calories per meal</label>
-      <input type="text" id="calories_per_meal" name="calories_per_meal">
-
-      <label for="date">Todays date:</label>
-      <input type="date" id="date" name="date">
-
-      <input type="submit" value="Submit">
-    </form>
-
-    <a href="/view_meals/6">Visa måltider.</a>
+    <h1>Måltidsformulär</h1>
+    <div class="form-t">
+      <form action="/meal" method="POST" class="t-log">
+        <div class="textfield-t">
+          <label for="meal_id">Måltids-ID:</label>
+          <input type="text" id="meal_id" name="meal_id">
+        </div>
+        <div class="textfield-t">
+          <label for="m_id">Användar-ID:</label>
+          <input type="text" id="m_id" name="m_id">
+        </div>
+        <div class="textfield-t">
+          <label for="calories_per_meal">Kalorier:</label>
+          <input type="text" id="calories_per_meal" name="calories_per_meal">
+        </div>
+        <div class="textfield-t">
+          <label for="date">Datum:</label>
+          <input type="date" id="date" name="date">
+        </div>
+        <input type="submit" class="submit-log" value="Logga måltid">
+        <a href="/view_meals/6">Visa måltider</a>
+      </form>
+    </div>
   </div>
 </body>
 

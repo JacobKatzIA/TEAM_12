@@ -1,12 +1,12 @@
 h1{
     text-align: center;
-    color: whitesmoke;
+    color: rgb(0, 0, 0);
+    padding-top: 15px;
 }
 
 h2{
     text-align: center;
     color: whitesmoke;
-    border-bottom: 3px dotted whitesmoke;
 }
 
 p{
@@ -26,13 +26,14 @@ body{
     background-color: rgba(0, 0, 0, 0.407);
     position: relative;
     left: 0;
+    top: 30px;
 }
 
 
 #container > nav > ul{
     display: inline;
     overflow: hidden;
-    margin: 30px;
+    margin: 10px;
     padding: 0;
     list-style-type: none;
 
@@ -41,6 +42,12 @@ body{
 #container > nav > ul > li{
     float: left;
 
+}
+.nav-logo{
+    position: absolute;
+    z-index: 1;
+    padding: 10px;
+    left: 550px;
 }
 
 #container > nav > ul > li a{
@@ -58,43 +65,12 @@ body{
     background-color: rgba(255, 255, 255, 0.7);
     transition: 0.7s;
 }
+#container > main{
+    margin-top: 100px;
+}
 
 #container > main > p{
     text-align: center;
-}
-
-#container > main > ul{
-    color: white;    
-    margin-left: 40%;
-
-}
-
-
-#container > main > form{
-    margin-top: 20px;
-    color: white;
-    margin-left: 43%;
-    margin-top: 50px;
-}
-
-#container > main > form > input{
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 200px;
-    height: 30px;
-}
-
-.popcorn{
-    margin-left: 35%;
-    margin-bottom: 1%;
-    overflow: hidden;
-    
-}
-
-.kontaktbok{
-    margin-left: 42%;
-    margin-bottom: 1%;
-    overflow: hidden;
 }
 
 footer{
@@ -133,17 +109,12 @@ footer > p{
         margin-left: 40%;
     
     }
-    .popcorn{
-        margin-left: 10%;
-        margin-bottom: 1%;
-        overflow: hidden;
-        
-    }
+
     #container > main > img{
         width: auto;
         display: none;
     }
-    container > main > form{
+    #container > main > form{
         margin-left: 10px;
 
     }
@@ -234,8 +205,70 @@ input[type="submit"]:hover{
 .sign-up a:hover{
     text-decoration: underline;
 }
+.logo{
+    padding: 2% 0 0 5%;
+}
+.paragraph-register{
+    margin: 30px 30px;
+    text-align: center;
+    font-size: 16px;
+}
+.paragraph-register p{
+    color: black;
+}
 
+form .textfield-t{
+    position: relative;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.445);
+    margin: 5px 0;
+}
+.t-log form{
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+.t-log{
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background: rgba(245, 245, 245, 0.477);
+    border-radius: 10px;
+}
 
-
-
-
+.textfield-t input{
+    padding: 0 5px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background: none;
+    outline: none;
+}
+.textfield-t label{
+    margin: 5px;
+    left: 5px;
+    color: rgb(0, 0, 0);
+    font-style: italic;
+    font-weight: bold;
+    font-size: 16px;
+    pointer-events: none;
+}
+.submit-log{
+    width: 150px;
+    height: 50px;
+    margin: 15px 15px;
+    border: 2px solid white;
+    background: rgb(0, 21, 255);
+    border-radius: 10px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+}
+.t-log a{
+    text-decoration: none;
+    text-align: right;
+}
+.t-log a:hover{
+    text-decoration: underline;
+}

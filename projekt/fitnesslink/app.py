@@ -1,6 +1,6 @@
 import psycopg2
 from psycopg2 import Error
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
 

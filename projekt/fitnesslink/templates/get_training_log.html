@@ -11,35 +11,48 @@
 
 <body>
     <div id="container">
-        <header>
-            <h1>Träningsloggar</h1>
-        </header>
-
         <nav>
             <ul>
                 <li><a href="/start">Hem</a></li>
                 <li><a href="/get_training_log">Träna</a></li>
                 <li><a href="/meal">Mat</a></li>
             </ul>
+            <img src="{{ url_for('static', filename='static/image.fitnesslink.png') }}" alt="Fitnesslink.logo"
+                class="nav-logo">
         </nav>
 
-        <form action="/get_training_log" method="post">
-            <label for="m_id">Användar-ID:</label>
-            <input type="text" id="m_id" name="m_id">
-            <label for="date">Datum:</label>
-            <input type="date" id="date" name="date">
-            <label for="exercise_id">Övnings-ID:</label>
-            <input type="text" id="exercise_id" name="exercise_id">
-            <label for="weight">Vikt:</label>
-            <input type="text" id="weight" name="weight">
-            <label for="repetitions">Repetitioner:</label>
-            <input type="number" id="repetitions" name="repetitions">
-            <label for="sets">Set:</label>
-            <input type="number" id="sets" name="sets">
-            <input type="submit" value="Logga pass">
-        </form>
+        <h1>Träningsloggar</h1>
 
-        <a href="/view_workouts/6">Visa träningspass.</a>
+        <div class="form-t">
+            <form action="/get_training_log" method="post" class="t-log">
+                <div class="textfield-t">
+                    <label for="m_id">Användar-ID:</label>
+                    <input type="text" id="m_id" name="m_id">
+                </div>
+                <div class="textfield-t">
+                    <label for="date">Datum:</label>
+                    <input type="date" id="date" name="date">
+                </div>
+                <div class="textfield-t">
+                    <label for="exercise_id">Övnings-ID:</label>
+                    <input type="text" id="exercise_id" name="exercise_id">
+                </div>
+                <div class="textfield-t">
+                    <label for="weight">Vikt:</label>
+                    <input type="text" id="weight" name="weight">
+                </div>
+                <div class="textfield-t">
+                    <label for="repetitions">Repetitioner:</label>
+                    <input type="number" id="repetitions" name="repetitions">
+                </div>
+                <div class="textfield-t">
+                    <label for="sets">Set:</label>
+                    <input type="number" id="sets" name="sets">
+                </div>
+                <input type="submit" class="submit-log" value="Logga pass">
+                <a href="/view_workouts/6">Visa träningspass</a>
+            </form>
+        </div>
     </div>
 </body>
 

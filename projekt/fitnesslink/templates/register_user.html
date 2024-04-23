@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +9,35 @@
   <title>Registrera medlemmar</title>
 </head>
 
-<body>
-  <header>
-    <h1>Registrera medlemmar</h1>
-  </header>
+<body class="inlogg">
+  <div class="login">
+    <header>
+      <h1>Registrera dig</h1>
+    </header>
 
-  <form action="/submit" method="post">
-    <label for="fullname">Fullständigt namn:</label>
-    <input type="text" id="fullname" name="fullname" required>
-    <label for="username">Användarnamn:</label>
-    <input type="text" id="username" name="username" required>
-    <label for="password">Lösenord:</label>
-    <input type="password" id="password" name="password" required>
-    <label for="email">Emailaddress:</label>
-    <input type="email" id="email" name="email" required>
-    <input type="submit" value="Registrera">
-  </form>
+    <form action="/submit" method="post">
+      <div class="textfield">
+        <label for="fullname">Fullständigt namn:</label>
+        <input type="text" id="fullname" name="fullname" required>
+      </div>
+      <div class="textfield">
+        <label for="username">Användarnamn:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="textfield">
+        <label for="password">Lösenord:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="textfield">
+        <label for="email">Emailaddress:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <input type="submit" class="submit-login" value="Registrera">
+      <div class="paragraph-register">
+        <p>Klicka på <em>registrera</em> för att skapa konto</p>
+      </div>
+    </form>
+  </div>
 </body>
+
 </html>
