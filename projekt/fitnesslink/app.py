@@ -1,8 +1,9 @@
 import psycopg2
 from psycopg2 import Error
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 
 app = Flask(__name__)
+app.secret_key = 'hejhej'
 
 def register_member(fullname, username, password, email):
     try:
@@ -214,10 +215,12 @@ def index():
     
     # Om autentiseringen lyckades, logga in användaren
     if authenticated_user:
-        return redirect(url_for('start'))
+      flash('Lyckad inloggning', 'success')
+      return redirect(url_for('start'))
     
     else:
-        return "Fel användarnamn eller lösenord. Försök igen."
+      flash('Fel användarnamn eller lösenord. Försök igen.', 'error')
+      return redirect(url_for('index'))
   else:
      return render_template('index.html')
 

@@ -23,6 +23,13 @@
         <input type="password" name="password" required>
       </div>
       <input type="submit" class="submit-login" value="logga in">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
       <div class="sign-up">
         <a href="/register_user">Vänligen registrera dig här!</a>
       </div>

@@ -272,3 +272,17 @@ form .textfield-t{
 .t-log a:hover{
     text-decoration: underline;
 }
+
+.alert-success{
+    color: green;
+}
+.alert-error{
+    color: red;
+}
+
+.alert{
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+}
