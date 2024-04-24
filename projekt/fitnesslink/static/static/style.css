@@ -282,7 +282,5 @@ form .textfield-t{
 
 .alert{
     padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid transparent;
-    border-radius: 5px;
+    margin-bottom: 5px;
 }
