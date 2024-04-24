@@ -25,18 +25,15 @@
 
         <table>
             <tr>
-                <th>MåltidsID</th>
-                <th>MedlemsID</th>
-                <th>Kalorier</th>
+                <th>Måltidstyp</th>
                 <th>Datum</th>
+                <th>Kalorier</th>
             </tr>
-            {% for meal in meal %}
+            {% for meal in meals %}
             <tr>
                 <td>{{ meal[0] }}</td>
                 <td>{{ meal[1] }}</td>
                 <td>{{ meal[2] }}</td>
-                <td>{{ meal[3] }}</td>
-                <td>{{ meal[4] }}</td>
             </tr>
             {% endfor %}
         </table>

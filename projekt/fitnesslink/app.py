@@ -113,39 +113,58 @@ def submit():
 
 
 @app.route('/meal', methods=['GET', 'POST'])
-def meal():
+def log_meal():
     if request.method == 'POST':
-      meal_id = request.form['meal_id']
       m_id = request.form['m_id']
-      calories_per_meal = request.form['calories_per_meal']
+      meal_id = request.form['meal_id']
+      calories = request.form['calories']
       date = request.form['date']
 
-      try:
-          connection = psycopg2.connect(
-            user="ap2204",
-            password="if7fupb5",
-            host="pgserver.mau.se",
-            port="5432",
-            database="ap2204"
-         )
-          cursor = connection.cursor()
+      connection = psycopg2.connect(
+        user="ap2204",
+        password="if7fupb5",
+        host="pgserver.mau.se",
+        port="5432",
+        database="ap2204"
+        )
+      if connection:
+          try:
+            cursor = connection.cursor()
 
-          cursor.execute(
-            "INSERT INTO meal (meal_id, m_id, calories_per_meal, date) VALUES (%s, %s, %s, %s)",
-            (meal_id, m_id, calories_per_meal, date)
-         )
-          connection.commit()
-          print("Din måltid registrerades korrekt")
-          return redirect('/meal')
-      except (Exception, Error) as error:
-         print("Fel vid registrering av måltid:", error)
-         return "Din registrering av måltiden misslyckades"
-      finally:
-         if connection:
+            cursor.execute("INSERT INTO MealCalories (MealID, Calories) VALUES (%s, %s) RETURNING MealCalorieID",
+                          (meal_id, calories))
+            meal_calorie_id = cursor.fetchone()[0]
+
+            cursor.execute("INSERT INTO MealLog (m_id, MealCalorieID, MealDate) VALUES (%s, %s, %s)",
+                          (m_id, meal_calorie_id, date))
+            connection.commit()
+        
+          except (Exception, Error) as error:
+            print("Fel vid registrering av måltid:", error)
+            return "Din registrering av måltiden misslyckades"
+          finally:
             cursor.close()
             connection.close()
+      return render_template('meal.html')
       
-    return render_template('meal.html')
+    connection = psycopg2.connect(
+        user="ap2204",
+        password="if7fupb5",
+        host="pgserver.mau.se",
+        port="5432",
+        database="ap2204"
+        )
+    if connection:
+      try:
+        cursor = connection.cursor()
+        cursor.execute("SELECT MealID, MealType FROM Meals")
+        meal_types = cursor.fetchall()
+    
+      finally:
+        cursor.close()
+        connection.close()
+    
+    return render_template('meal.html', meal_types=meal_types)
   
 @app.route('/get_training_log', methods=['POST', 'GET'])
 def get_training_log():
@@ -291,20 +310,22 @@ def view_meals(m_id):
       )
       cursor = connection.cursor()
       cursor.execute('''
-      SELECT Meal.meal_id, Meal.m_id, Meal.calories_per_meal, Meal.date
-      FROM Meal
-      WHERE Meal.M_id = %s
-      ORDER BY Meal.Date DESC;              
+      SELECT Meals.Mealtype, MealLog.MealDate, MealCalories.Calories
+      FROM MealLog
+      JOIN MealCalories ON MealLog.MealCalorieID = MealCalories.MealCalorieID
+      JOIN Meals ON MealCalories.MealID = Meals.MealID
+      WHERE MealLog.m_id = %s
+      ORDER BY MealLog.MealDate DESC;              
       ''', (m_id,))
-      meal = cursor.fetchall()
+      meals = cursor.fetchall()
       
       cursor.close()
       connection.close()
       
-      return render_template('view_meals.html', meal=meal, m_id=m_id)
+      return render_template('view_meals.html', meals=meals, user_id=m_id)
     except (Exception, Error) as error:
-      print("Fel vid inhämtning av träningsloggar:", error)
-      return "Kunde inte hämta träningsloggar."
+      print("Fel vid inhämtning av måltidsloggar:", error)
+      return "Kunde inte hämta måltidsloggar."
     finally:
       if connection:
         cursor.close()

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 
 <head>
   <meta charset="UTF-8">
@@ -25,20 +25,24 @@
     <div class="form-t">
       <form action="/meal" method="POST" class="t-log">
         <div class="textfield-t">
-          <label for="meal_id">Måltids-ID:</label>
-          <input type="text" id="meal_id" name="meal_id">
+          <label for="m_id">Användar-ID</label>
+          <input type="text" id="m_id" name="m_id" required>
         </div>
         <div class="textfield-t">
-          <label for="m_id">Användar-ID:</label>
-          <input type="text" id="m_id" name="m_id">
+          <label for="meal_id">Välj måltidstyp:</label>
+          <select id="meal_id" name="meal_id">
+            {% for meal_type in meal_types %}
+            <option class="options" value="{{ meal_type[0] }}">{{ meal_type[1] }}</option>
+            {% endfor %}
+          </select>
         </div>
         <div class="textfield-t">
-          <label for="calories_per_meal">Kalorier:</label>
-          <input type="text" id="calories_per_meal" name="calories_per_meal">
+          <label for="calories">Kalorier:</label>
+          <input type="number" id="calories" name="calories" required>
         </div>
         <div class="textfield-t">
           <label for="date">Datum:</label>
-          <input type="date" id="date" name="date">
+          <input type="date" id="date" name="date" required>
         </div>
         <input type="submit" class="submit-log" value="Logga måltid">
         <a href="/view_meals/6">Visa måltider</a>

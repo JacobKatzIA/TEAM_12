@@ -284,4 +284,19 @@ form .textfield-t{
     padding: 10px;
     margin-bottom: 5px;
 }
-
+select{
+    padding: 6px;
+    margin: 5px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 3px;
+}
+select:hover{
+    border-color: rgb(26, 81, 210);
+    transition: .5s;
+    cursor: pointer;
+}
+select > option{
+    cursor: pointer;
+}
