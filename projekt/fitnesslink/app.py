@@ -5,6 +5,56 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 app = Flask(__name__)
 app.secret_key = 'hejhej'
 
+@app.route('/change_credentials', methods=['GET', 'POST'])
+def change_credentials():
+    if request.method == 'POST':
+       current_username = request.form['current_username']
+       current_password = request.form['current_password']
+       new_username = request.form['new_username']
+       new_password = request.form['new_password']
+
+       if not current_username or not current_password or not new_username or not new_password:
+          return "Vänligen fyll i alla fält"
+       
+       if update_credentials(current_username, current_password, new_username, new_password):
+          return "Användaruppgifterna har uppdaterats"
+       else:
+          return "Fel vid uppdatering av användaruppgifter"
+       
+    return render_template('change_credentials.html')
+
+
+def update_credentials(current_username, current_password, new_username, new_pasword):
+    try:
+      connection = psycopg2.connect(
+        user="ap2204",
+        password="if7fupb5",
+        host="pgserver.mau.se",
+        port="5432",
+        database="ap2204")
+      
+      cursor = connection.cursor()
+
+      cursor.execute("SELECT * FROM members WHERE username = %s AND password = %s", (current_username, current_password))
+      user_exists = cursor.fetchone()
+
+      if user_exists:
+         cursor.execute("UPDATE members SET username = %s, password = %s WHERE username = %s", (new_username, new_pasword, current_username))
+         connection.commit()
+         return True
+      else:
+         return False
+      
+    except (Exception, Error) as error:
+        print("Fel vid uppdatering av användaruppgifter:", error)
+        return False
+    finally:
+        if connection:
+           cursor.close()
+           connection.close()
+
+
+
 def register_member(fullname, username, password, email):
     try:
         connection = psycopg2.connect(

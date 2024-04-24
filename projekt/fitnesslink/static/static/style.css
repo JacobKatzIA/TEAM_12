@@ -272,6 +272,7 @@ form .textfield-t{
 .t-log a:hover{
     text-decoration: underline;
 }
+<<<<<<< Updated upstream
 
 .alert-success{
     color: green;
@@ -285,4 +286,6 @@ form .textfield-t{
     margin-bottom: 10px;
     border: 1px solid transparent;
     border-radius: 5px;
-}
+}}
+=======
+>>>>>>> Stashed changes
