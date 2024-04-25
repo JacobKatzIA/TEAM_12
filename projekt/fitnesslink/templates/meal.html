@@ -21,9 +21,9 @@
         class="nav-logo">
     </nav>
 
-    <h1>Måltidsformulär</h1>
     <div class="form-t">
       <form action="/meal" method="POST" class="t-log">
+        <h1 class="form-title">Logga måltid</h1>
         <div class="textfield-t">
           <label for="m_id">Användar-ID</label>
           <input type="text" id="m_id" name="m_id" required>
@@ -44,7 +44,7 @@
           <label for="date">Datum:</label>
           <input type="date" id="date" name="date" required>
         </div>
-        <input type="submit" class="submit-log" value="Logga måltid">
+        <input type="submit" class="form-submit" value="Logga måltid">
         <a href="/view_meals/6">Visa måltider</a>
       </form>
     </div>
