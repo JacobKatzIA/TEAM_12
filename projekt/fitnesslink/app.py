@@ -83,11 +83,11 @@ def register_member(fullname, username, password, email):
                       (next_id, fullname, username, password, email))
       
         connection.commit()
-        print("Användare registrerad")
+        flash("Användare registrerad")
         return True
 
     except (Exception, Error) as error:
-        print("Fel vid registrering:", error)
+        flash("Fel vid registrering:", error)
         return False
     finally:
         if connection:
