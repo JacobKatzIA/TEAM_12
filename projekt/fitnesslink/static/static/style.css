@@ -123,6 +123,14 @@ footer > p{
         margin-left: 10px;
     }
 }
+@media (max-width: 800px){
+    .grid-container{
+        grid-template-columns: 1fr;
+    }
+    form[action="/calculate_calories"], .form-t{
+        grid-column: 1/2;
+    }
+}
 
 .inlogg{
     margin: 0;
@@ -227,13 +235,13 @@ form .textfield-t{
     box-sizing: border-box;
 }
 .t-log{
-    position: absolute;
-    top: 50%;
-    left: 25%;
-    transform: translate(-50%, -50%);
-    width: 500px;
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
     background: rgba(245, 245, 245, 0.477);
     border-radius: 10px;
+    padding: 20px;
 }
 
 .textfield-t input{
@@ -312,4 +320,61 @@ select:hover{
     font-weight: 700;
     cursor: pointer;
     outline: none;
+}
+
+.form-t{
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+form[action="/calculate_calories"] {
+    grid-column: 2/3;
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    align-items: start;
+    margin-top: 20px;
+}
+.radio-area{
+    border-bottom: 2px solid rgba(0, 0, 0, 0.445);
+    margin: 5px;
+    left: 5px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.radio{
+    margin: 10px 0;
+}
+
+.radio input[type="radio"]{
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #007BFF;
+    border-radius: 50%;
+    outline: none;
+}
+
+.radio input[type="radio"]:checked{
+    background-color: #007BFF;
+    border-color: #004793;
+}
+
+.radio label{
+    margin-left: 10px;
+    user-select: none;
+    font-size: 16px;
+}
+
+.radio:hover input[type="radio"]{
+    border-color: #00a4b3;
 }

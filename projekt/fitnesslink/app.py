@@ -331,7 +331,7 @@ def view_meals(m_id):
         cursor.close()
         connection.close()
         
-@app.route('/calculate_calories', methods=['GET', 'POST'])
+@app.route('/meal', methods=['GET', 'POST'])
 def calculate_calories():
   calories = None
   if request.method == 'POST':
@@ -343,7 +343,7 @@ def calculate_calories():
         or not (isinstance(height, str) and height.isdigit())\
         or not (isinstance(age, str) and age.isdigit()):
       flash("Vikt, längd och ålder måste vara numeriska värden.", "error")
-      return redirect(url_for('calculate_calories'))
+      return redirect(url_for('meal'))
       
     weight = float(weight)
     height = float(height)
@@ -355,8 +355,8 @@ def calculate_calories():
     
     calories = calculate_daily_calories(weight, height, age, gender, activity_level)
     
-    return render_template('calculate_calories.html', calories=calories)
-  return render_template('calculate_calories.html')
+    return render_template('meal.html', calories=calories)
+  return render_template('meal.html')
     
 def calculate_bmr(weight, height, age, gender):
     if gender == 'MAN':
