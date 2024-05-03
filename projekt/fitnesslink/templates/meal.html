@@ -21,36 +21,81 @@
         class="nav-logo">
     </nav>
 
-    <div class="form-t"> 
-      <form action="/meal" method="POST" class="t-log">
-        <h1 class="form-title">Logga måltid</h1>
-        <div class="textfield-t">
-          <label for="m_id">Användar-ID</label>
-          <input type="text" id="m_id" name="m_id" required>
-        </div>
-        <div class="textfield-t">
-          <label for="meal_id">Välj måltidstyp:</label>
-          <select id="meal_id" name="meal_id">
-            {% for meal_type in meal_types %}
-            <option class="options" value="{{ meal_type[0] }}">{{ meal_type[1] }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="textfield-t">
-          <label for="calories">Kalorier:</label>
-          <input type="number" id="calories" name="calories" required>
-        </div>
-        <div class="textfield-t">
-          <label for="date">Datum:</label>
-          <input type="date" id="date" name="date" required>
-        </div>
-        <input type="submit" class="form-submit" value="Logga måltid">
-        <a href="/view_meals/6">Visa måltider</a>
-      </form>
+    <div class="grid-container">
+      <div class="form-t">
+        <form action="/meal" method="POST" class="t-log">
+          <h1 class="form-title">Logga måltid</h1>
+          <div class="textfield-t">
+            <label for="m_id">Användar-ID</label>
+            <input type="text" id="m_id" name="m_id" required>
+          </div>
+          <div class="textfield-t">
+            <label for="meal_id">Välj måltidstyp:</label>
+            <select id="meal_id" name="meal_id">
+              {% for meal_type in meal_types %}
+              <option class="options" value="{{ meal_type[0] }}">{{ meal_type[1] }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="textfield-t">
+            <label for="calories">Kalorier:</label>
+            <input type="number" id="calories" name="calories" required>
+          </div>
+          <div class="textfield-t">
+            <label for="date">Datum:</label>
+            <input type="date" id="date" name="date" required>
+          </div>
+          <input type="submit" class="form-submit" value="Logga måltid">
+          <a href="/view_meals/6">Visa måltider</a>
+        </form>
+      </div>
+      <div class="form-t">
+        <form action="/meal" method="POST" class="t-log">
+          <h2 class="form-title">Beräkna ditt dagliga kaloribehov</h2>
+          <div class="textfield-t">
+            <label for="weight">Vikt (kg):</label>
+            <input type="text" id="weight" name="weight" title="Ange vikt i kg (exempel: 70)" pattern="[0-9]+" required>
+          </div>
+          <div class="textfield-t">
+            <label for="height">Längd (cm):</label>
+            <input type="text" id="height" name="height" title="Ange längd i cm (exempel: 175)" pattern="[0-9]+"
+              required>
+          </div>
+          <div class="textfield-t">
+            <label for="age">Ålder:</label>
+            <input type="text" id="age" name="age" title="Ange ålder i år (exempel: 30)" pattern="[0-9]+" required>
+          </div>
+          <div class="radio-area">
+            <label for="gender">Kön:</label>
+            <div class="radio">
+              <input type="radio" id="male" name="gender" value="MAN" required>
+              <label for="male">Man</label>
+            </div>
+          
+            <div class="radio">
+              <input type="radio" id="female" name="gender" value="KVINNA" required>
+              <label for="female">Kvinna</label>
+            </div>
+          </div>
+          <div class="textfield-t">
+            <label for="activity_level">Aktivitetsnivå:</label>
+            <select id="activity_level" name="activity_level" required>
+              <option value="1">Ingen eller lite träning</option>
+              <option value="2">Träning 1-3 dagar i veckan</option>
+              <option value="3">Träning 4-5 dagar i veckan</option>
+              <option value="4">Träning 6-7 dagar i veckan</option>
+              <option value="5">Träning 2 ggr/dag (tung träning)</option>
+            </select>
+          </div>
+
+          <input class="form-submit" type="submit" value="Beräkna">
+          {% if calories%}
+          <p>Ditt dagliga kaloribehov är: {{ calories }}</p>
+          {% endif %}
+        </form>
+      </div>
     </div>
   </div>
-  <a href="/calculate_calories">Räkna ut ditt dagliga kaloribehov här!</a>
-
 </body>
 
 </html>
