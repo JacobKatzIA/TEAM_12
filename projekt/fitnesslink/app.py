@@ -330,6 +330,57 @@ def view_meals(m_id):
       if connection:
         cursor.close()
         connection.close()
+        
+@app.route('/calculate_calories', methods=['GET', 'POST'])
+def calculate_calories():
+  calories = None
+  if request.method == 'POST':
+    weight = request.form['weight']
+    height = request.form['height']
+    age = request.form['age']
+    
+    if not (isinstance (weight, str) and weight.isdigit())\
+        or not (isinstance(height, str) and height.isdigit())\
+        or not (isinstance(age, str) and age.isdigit()):
+      flash("Vikt, längd och ålder måste vara numeriska värden.", "error")
+      return redirect(url_for('calculate_calories'))
+      
+    weight = float(weight)
+    height = float(height)
+    age = int(age)
+    
+    
+    gender = request.form['gender']
+    activity_level = int(request.form['activity_level'])
+    
+    calories = calculate_daily_calories(weight, height, age, gender, activity_level)
+    
+    return render_template('calculate_calories.html', calories=calories)
+  return render_template('calculate_calories.html')
+    
+def calculate_bmr(weight, height, age, gender):
+    if gender == 'MAN':
+        return (10 * weight) + (6.25 * height) - (5 * age) + 5
+    elif gender == 'KVINNA':
+        return (10 * weight) + (6.25 * height) - (5 * age) - 161
+    else:
+        raise ValueError("Felaktig inmatning. Kön måste anges som antingen MAN eller KVINNA")
+    
+def calculate_daily_calories(weight, height, age, gender, activity_level):
+    bmr = calculate_bmr(weight, height, age, gender)
+    if activity_level == 1: ##"Ingen eller lite träning"
+        calories = bmr * 1.2
+    elif activity_level == 2: ##"Träning 1-3 dagar i veckan"
+        calories = bmr * 1.375 
+    elif activity_level == 3: ##"Träning 4-5 dagar i veckan"
+        calories = bmr * 1.55
+    elif activity_level == 4: ##"Träning 6-7 dagar i veckan"
+        calories = bmr * 1.725 
+    elif activity_level == 5: ##"Träning 2 ggr/dag (tung träning)"
+        calories = bmr *1.9
+    else:
+        raise ValueError("Ogiltig aktivitetsnivå")
+    return calories
 
 
 if __name__ == '__main__':
