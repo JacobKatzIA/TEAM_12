@@ -29,10 +29,17 @@
         <input type="password" id="password" name="password" required>
       </div>
       <div class="textfield">
-        <label for="email">Emailaddress:</label>
+        <label for="email">Emailadress:</label>
         <input type="email" id="email" name="email" required>
       </div>
       <input type="submit" class="submit-login" value="Registrera">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
       <div class="paragraph-register">
         <p>Klicka på <em>registrera</em> för att skapa konto</p>
       </div>
