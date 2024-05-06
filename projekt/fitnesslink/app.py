@@ -10,21 +10,23 @@ def change_credentials():
     if request.method == 'POST':
        current_username = request.form['current_username']
        current_password = request.form['current_password']
-       new_username = request.form['new_username']
        new_password = request.form['new_password']
 
-       if not current_username or not current_password or not new_username or not new_password:
-          return "Vänligen fyll i alla fält"
+       if not current_username or not current_password or not new_password:
+          flash("Vänligen fyll i alla fält")
+          return redirect(url_for('change_credentials'))
        
-       if update_credentials(current_username, current_password, new_username, new_password):
-          return "Användaruppgifterna har uppdaterats"
+       if update_credentials(current_username, current_password, new_password):
+          flash("Lösenordet har ändrats", "success")
+          return redirect(url_for('change_credentials'))
        else:
-          return "Fel vid uppdatering av användaruppgifter"
+          flash("Fel vid ändring av lösenord", "error")
+          return redirect(url_for('change_credentials'))
        
     return render_template('change_credentials.html')
 
 
-def update_credentials(current_username, current_password, new_username, new_pasword):
+def update_credentials(current_username, current_password, new_pasword):
     try:
       connection = psycopg2.connect(
         user="ap2204",
@@ -39,7 +41,7 @@ def update_credentials(current_username, current_password, new_username, new_pas
       user_exists = cursor.fetchone()
 
       if user_exists:
-         cursor.execute("UPDATE members SET username = %s, password = %s WHERE username = %s", (new_username, new_pasword, current_username))
+         cursor.execute("UPDATE members SET password = %s WHERE username = %s", (new_pasword, current_username))
          connection.commit()
          return True
       else:
