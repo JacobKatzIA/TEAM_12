@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',
+    filename='static/style.css') }}">
+    <title>Träningsloggar</title>
+</head>
+
+<body>
+    <div id="container">
+        <nav>
+            <ul>
+                <li><a href="/start">Hem</a></li>
+                <li><a href="/get_training_log">Träna</a></li>
+                <li><a href="/meal">Kost</a></li>
+            </ul>
+            <div class="account-icon">
+                <img src="{{ url_for('static, filename='static/user_icon.png) }}" alt="Profile" onclick="togggleDropdown()">
+                <div class="profile-dropdown" id="dropdown">
+                    <a href="/logout">Logga ut</a>
+                    <a href="/change_credentials">Ändra lösenord</a>
+                    <a href="#">Radera/Avsluta konto </a>
+                </div>
+            </div>
+                <img src="{{ url_for('static', filename='static/image.fitnesslink.png') }}" alt="Fitnesslink.logo" class="nav-logo">
+        </nav>
+
+        <h1>Träningsloggar</h1>
+
+        <div class="form-t">
+            <form action="/get_training_log" method="post" class="t-log">
+                <input type="hidden" id="m_id" name="m_id" value="{{ m_id }}">
+                
+                <div class="textfield-t">
+                    <label for="date">Datum:</label>
+                    <input type="date" id="date" name="date">
+                </div>
+                <div class="textfield-t">
+                    <label for="exercise_id">Övnings-ID:</label>
+                    <input type="text" id="exercise_id" name="exercise_id">
+                </div>
+                <div class="textfield-t">
+                    <label for="weight">Vikt:</label>
+                    <input type="text" id="weight" name="weight">
+                </div>
+                <div class="textfield-t">
+                    <label for="repetitions">Repetitioner:</label>
+                    <input type="number" id="repetitions" name="repetitions">
+                </div>
+                <div class="textfield-t">
+                    <label for="sets">Set:</label>
+                    <input type="number" id="sets" name="sets">
+                </div>
+                <input type="submit" class="submit-log" value="Logga pass">
+                <a href="{{ url_for('view_workouts', m_id=current_user.get_id()) }}">Visa mina träningspass</a>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
