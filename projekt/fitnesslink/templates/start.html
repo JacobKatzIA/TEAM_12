@@ -18,17 +18,67 @@
                 <li><a href="/get_training_log">Träna</a></li>
                 <li><a href="/meal">Mat</a></li>
             </ul>
-            <img src="{{ url_for('static', filename='static/image.fitnesslink.png') }}" alt="Fitnesslink.logo" class="nav-logo">
+            <img src="{{ url_for('static', filename='static/image.fitnesslink.png') }}" alt="Fitnesslink.logo"
+                class="nav-logo">
         </nav>
         <main>
-            <h2>Vi som älskar träning!</h2>
-            <p>Vi älskar träning!</p>
             <a href="/change_credentials">Ändra användaruppgifter</a>
-        </main>
 
-        <footer>
-            <p>Coypright 2024</p>
-        </footer>
+            <div class="grid-container">
+                <div class="form-t">
+                    <form action="/start" method="POST" class="t-log">
+                        <h2 class="form-title">Beräkna ditt dagliga kaloribehov</h2>
+                        <div class="textfield-t">
+                            <label for="weight">Vikt (kg):</label>
+                            <input type="text" id="weight" name="weight" title="Ange vikt i kg (exempel: 70)"
+                                pattern="[0-9]+" required>
+                        </div>
+                        <div class="textfield-t">
+                            <label for="height">Längd (cm):</label>
+                            <input type="text" id="height" name="height" title="Ange längd i cm (exempel: 175)"
+                                pattern="[0-9]+" required>
+                        </div>
+                        <div class="textfield-t">
+                            <label for="age">Ålder:</label>
+                            <input type="text" id="age" name="age" title="Ange ålder i år (exempel: 30)"
+                                pattern="[0-9]+" required><br>
+                        </div>
+                        <div class="radio-area">
+                            <label for="gender">Kön:</label>
+                            <div class="radio">
+                                <input type="radio" id="male" name="gender" value="MAN" required>
+                                <label for="male">Man</label>
+                            </div>
+
+                            <div class="radio">
+                                <input type="radio" id="female" name="gender" value="KVINNA" required>
+                                <label for="female">Kvinna</label>
+                            </div>
+                        </div>
+                        <div class="textfield-t">
+                            <label for="activity_level">Aktivitetsnivå:</label>
+                            <select id="activity_level" name="activity_level" required>
+                                <option value="1">Ingen eller lite träning</option>
+                                <option value="2">Träning 1-3 dagar i veckan</option>
+                                <option value="3">Träning 4-5 dagar i veckan</option>
+                                <option value="4">Träning 6-7 dagar i veckan</option>
+                                <option value="5">Träning 2 ggr/dag (tung träning)</option>
+                            </select>
+                        </div>
+
+                        <input class="form-submit" type="submit" value="Beräkna">
+                        {% if calories%}
+                        <p>Ditt dagliga kaloribehov är: {{ calories }}</p>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+    </div>
+    </main>
+
+    <footer>
+        <p>Coypright 2024</p>
+    </footer>
 
     </div>
 </body>
