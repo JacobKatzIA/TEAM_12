@@ -433,3 +433,8 @@ form[action="/calculate_calories"] {
 .profile-dropdown a:hover {
     background-color: #f1f1f1;
 }
+
+.black-text {
+    color:#000000;
+    border-bottom: #000000;
+}

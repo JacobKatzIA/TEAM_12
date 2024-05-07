@@ -16,13 +16,12 @@
             <ul>
                 <li><a href="/start">Hem</a></li>
                 <li><a href="/get_training_log">Träna</a></li>
-                <li><a href="/meal">Mat</a></li>
+                <li><a href="/meal">Kost</a></li>
             </ul>
             <div class="account-icon">
                 <img src="{{ url_for('static', filename='static/user_icon.png') }}" alt="Profile" onclick="togggleDropdown()">
                 <div class="profile-dropdown" id="dropdown">
                     <a href="/change_credentials">Ändra lösenord</a>
-                    <a href="#">Radera/Avsluta konto </a>
                     <a href="logout">Logga ut</a>
                  </div>
             </div>
@@ -74,7 +73,7 @@
 
                         <input class="form-submit" type="submit" value="Beräkna">
                         {% if calories%}
-                        <p>Ditt dagliga kaloribehov är: {{ calories }}</p>
+                        <p class="black-text">Ditt dagliga kaloribehov är: {{ calories }}</p>
                         {% endif %}
                     </form>
                 </div>

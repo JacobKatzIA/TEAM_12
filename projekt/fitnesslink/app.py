@@ -66,7 +66,6 @@ def load_user(user_id):
 @app.route('/logout')
 def logout():
   logout_user()
-  session.clear()
   return redirect(url_for('index'))
 
 @app.route('/change_credentials', methods=['GET', 'POST'])
@@ -428,8 +427,8 @@ def calculate_calories():
     
     calories = calculate_daily_calories(weight, height, age, gender, activity_level)
     
-    return render_template('meal.html', calories=calories)
-  return render_template('meal.html')
+    return render_template('start.html', calories=calories)
+  return render_template('start.html')
     
 def calculate_bmr(weight, height, age, gender):
     if gender == 'MAN':
