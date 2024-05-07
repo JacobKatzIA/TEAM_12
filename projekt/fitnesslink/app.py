@@ -65,9 +65,9 @@ def load_user(user_id):
         
 @app.route('/logout')
 def logout():
-  logout_user()
-  session.clear()
-  return redirect(url_for('index'))
+    logout_user()
+    session.clear()
+    return redirect(url_for('index'))
 
 @app.route('/change_credentials', methods=['GET', 'POST'])
 @login_required
@@ -265,7 +265,8 @@ def get_training_log():
       return redirect('/get_training_log')
       
   else:
-    return render_template('get_training_log.html', m_id=current_user.id)
+        return render_template('get_training_log.html', workouts=None)
+
 
 @app.route('/view_workouts')
 @login_required
