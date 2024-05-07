@@ -1,6 +1,6 @@
 import psycopg2
 from psycopg2 import Error
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
@@ -65,9 +65,9 @@ def load_user(user_id):
         
 @app.route('/logout')
 def logout():
-  logout_user()
-  session.clear()
-  return redirect(url_for('index'))
+    logout_user()
+    session.clear()
+    return redirect(url_for('index'))
 
 @app.route('/change_credentials', methods=['GET', 'POST'])
 @login_required
