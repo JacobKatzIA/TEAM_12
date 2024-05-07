@@ -208,7 +208,10 @@ def get_training_log():
       return redirect('/get_training_log')
       
   else:
-    return render_template('get_training_log.html', workouts=None)
+        return render_template('get_training_log.html', workouts=None)
+
+
+
 
 @app.route('/view_workouts/<int:m_id>')
 def view_workouts(m_id):
