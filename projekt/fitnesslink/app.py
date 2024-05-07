@@ -1,9 +1,73 @@
 import psycopg2
 from psycopg2 import Error
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
-app.secret_key = 'hejhej'
+app.secret_key = 'din_hemliga_nyckel'
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'index'
+
+def get_user(username):
+  try:
+      connection = psycopg2.connect(
+        user="ap2204",
+        password="if7fupb5",
+        host="pgserver.mau.se",
+        port="5432",
+        database="ap2204"
+      )
+      cursor = connection.cursor()
+      cursor.execute('SELECT m_id, password FROM members WHERE username = %s', (username,))
+      user_data = cursor.fetchone()
+      cursor.close()
+      connection.close()
+      return user_data
+  except (Exception, psycopg2.Error) as error:
+    print("Fel vid hämtning av data från PostgreSQL", error)
+    
+class User(UserMixin):
+  def __init__(self, m_id, username):
+    self.id = m_id
+    self.username = username
+    
+  def get_id(self):
+     return str(self.id)
+    
+@login_manager.user_loader
+def load_user(user_id):
+  connection = None
+  cursor = None
+  try:
+    connection = psycopg2.connect(
+      user="ap2204",
+      password="if7fupb5",
+      host="pgserver.mau.se",
+      port="5432",
+      database="ap2204"
+    )
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM members WHERE m_id = %s", (user_id,))
+    user_data = cursor.fetchone()
+    if user_data is None:
+      return None
+    username = user_data[2]
+    return User(user_id, username)
+  except (Exception, psycopg2.Error) as error:
+    print("Fel vid hämtning från PostgreSQL", error)
+    return None
+  finally:
+    if cursor:
+      cursor.close()
+    if connection:
+        connection.close()
+        
+@app.route('/logout')
+def logout():
+  logout_user()
+  session.clear()
+  return redirect(url_for('index'))
 
 @app.route('/change_credentials', methods=['GET', 'POST'])
 def change_credentials():
@@ -115,63 +179,55 @@ def submit():
 
 
 @app.route('/meal', methods=['GET', 'POST'])
+@login_required
 def log_meal():
-    if request.method == 'POST':
-      m_id = request.form['m_id']
-      meal_id = request.form['meal_id']
-      calories = request.form['calories']
-      date = request.form['date']
-
-      connection = psycopg2.connect(
-        user="ap2204",
-        password="if7fupb5",
-        host="pgserver.mau.se",
-        port="5432",
-        database="ap2204"
+    connection = None
+    cursor = None
+    try:
+        connection = psycopg2.connect(
+          user="ap2204",
+          password="if7fupb5",
+          host="pgserver.mau.se",
+          port="5432",
+          database="ap2204"
         )
-      if connection:
-          try:
-            cursor = connection.cursor()
-
-            cursor.execute("INSERT INTO MealCalories (MealID, Calories) VALUES (%s, %s) RETURNING MealCalorieID",
-                          (meal_id, calories))
-            meal_calorie_id = cursor.fetchone()[0]
-
-            cursor.execute("INSERT INTO MealLog (m_id, MealCalorieID, MealDate) VALUES (%s, %s, %s)",
-                          (m_id, meal_calorie_id, date))
-            connection.commit()
-        
-          except (Exception, Error) as error:
-            print("Fel vid registrering av måltid:", error)
-            return "Din registrering av måltiden misslyckades"
-          finally:
-            cursor.close()
-            connection.close()
-      return render_template('meal.html')
-      
-    connection = psycopg2.connect(
-        user="ap2204",
-        password="if7fupb5",
-        host="pgserver.mau.se",
-        port="5432",
-        database="ap2204"
-        )
-    if connection:
-      try:
         cursor = connection.cursor()
         cursor.execute("SELECT MealID, MealType FROM Meals")
         meal_types = cursor.fetchall()
-    
-      finally:
-        cursor.close()
-        connection.close()
-    
-    return render_template('meal.html', meal_types=meal_types)
+        
+        if request.method == 'POST':
+          m_id = current_user.id
+          meal_id = request.form['meal_id']
+          calories = request.form['calories']
+          date = request.form['date']
+        
+          cursor.execute("INSERT INTO MealCalories (MealID, Calories) VALUES (%s, %s) RETURNING MealCalorieID",
+                        (meal_id, calories))
+          meal_calorie_id = cursor.fetchone()[0]
+
+          cursor.execute("INSERT INTO MealLog (m_id, MealCalorieID, MealDate) VALUES (%s, %s, %s)",
+                        (m_id, meal_calorie_id, date))
+          connection.commit()
+          
+          return redirect('/meal')
+      
+        return render_template('meal.html', meal_types=meal_types)
+        
+    except (Exception, Error) as error:
+      print("Fel vid registrering av måltid:", error)
+      return "Din registrering av måltiden misslyckades. Fel: {}".format(error)
+    finally:
+        if cursor:
+          cursor.close()
+        if connection:
+          connection.close()
   
+
 @app.route('/get_training_log', methods=['POST', 'GET'])
+@login_required
 def get_training_log():
   if request.method == 'POST':
-    m_id = request.form['m_id']
+    m_id = current_user.id
     date = request.form['date']
     exercise_id = request.form['exercise_id']
     weight = request.form['weight']
@@ -211,10 +267,12 @@ def get_training_log():
         return render_template('get_training_log.html', workouts=None)
 
 
-
-
-@app.route('/view_workouts/<int:m_id>')
-def view_workouts(m_id):
+@app.route('/view_workouts')
+@login_required
+def view_workouts():
+    m_id = current_user.id  
+    connection = None
+    cursor = None
     try:
       connection = psycopg2.connect(
         user="ap2204",
@@ -224,26 +282,25 @@ def view_workouts(m_id):
         database="ap2204"
       )
       cursor = connection.cursor()
-      cursor.execute('''
+      query = '''
       SELECT Workouts.Date, Exercises.Name, WorkoutDetails.Weight, WorkoutDetails.Repetitions, WorkoutDetails.Sets
       FROM Workouts
       JOIN WorkoutDetails ON Workouts.WorkoutID = WorkoutDetails.WorkoutID
       JOIN Exercises ON WorkoutDetails.ExerciseID = Exercises.ExerciseID
       WHERE Workouts.M_id = %s
       ORDER BY Workouts.Date DESC;              
-      ''', (m_id,))
+      '''
+      cursor.execute(query, (m_id,))
       workouts = cursor.fetchall()
       
-      cursor.close()
-      connection.close()
-      
-      return render_template('view_workouts.html', workouts=workouts, m_id=m_id)
+      return render_template('view_workouts.html', workouts=workouts)
     except (Exception, Error) as error:
       print("Fel vid inhämtning av träningsloggar:", error)
-      return "Kunde inte hämta träningsloggar."
+      return "Kunde inte hämta träningsloggar. Fel: {}".format(error)
     finally:
-      if connection:
+      if cursor:
         cursor.close()
+      if connection:
         connection.close()
 
 def authenticate_user(username, password):
@@ -258,14 +315,17 @@ def authenticate_user(username, password):
         )
       
         cursor = connection.cursor()
-        sql_query = "SELECT username, password FROM members WHERE username = %s AND password = %s"
-        cursor.execute(sql_query, (username, password))
+        sql_query = "SELECT m_id, username, password FROM members WHERE username = %s"
+        cursor.execute(sql_query, (username,))
         user_info = cursor.fetchone()
         
         # om inget resultat hittades, returnera None
         if user_info is None:
             return None
-        return {'username': user_info[0]}
+          
+        if user_info[2] == password:
+          return {'m_id': user_info[0], 'username': user_info[1]}
+        return None
             
     except (Exception, psycopg2.Error) as error:
         print("Gick ej att hämta data från databasen", error)
@@ -289,14 +349,19 @@ def index():
     
     # Om autentiseringen lyckades, logga in användaren
     if authenticated_user:
+      user = User(authenticated_user['m_id'], authenticated_user['username'])
+      login_user(user)
+      if current_user.is_authenticated:
+        print("Användare inloggad:", current_user.username, current_user.get_id())
+      else:
+        print("Inloggning misslyckades.")
       flash('Lyckad inloggning', 'success')
       return redirect(url_for('start'))
     
     else:
       flash('Fel användarnamn eller lösenord. Försök igen.', 'error')
-      return redirect(url_for('index'))
-  else:
-     return render_template('index.html')
+    
+  return render_template('index.html')
 
 @app.route('/start')
 def start():
@@ -336,7 +401,7 @@ def view_meals(m_id):
         cursor.close()
         connection.close()
         
-@app.route('/meal', methods=['GET', 'POST'])
+@app.route('/start', methods=['GET', 'POST'])
 def calculate_calories():
   calories = None
   if request.method == 'POST':

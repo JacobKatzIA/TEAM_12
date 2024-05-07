@@ -25,10 +25,8 @@
 
         <div class="form-t">
             <form action="/get_training_log" method="post" class="t-log">
-                <div class="textfield-t">
-                    <label for="m_id">Användar-ID:</label>
-                    <input type="text" id="m_id" name="m_id">
-                </div>
+                <input type="hidden" id="m_id" name="m_id" value="{{ m_id }}">
+                
                 <div class="textfield-t">
                     <label for="date">Datum:</label>
                     <input type="date" id="date" name="date">
@@ -50,7 +48,7 @@
                     <input type="number" id="sets" name="sets">
                 </div>
                 <input type="submit" class="submit-log" value="Logga pass">
-                <a href="/view_workouts/6">Visa träningspass</a>
+                <a href="{{ url_for('view_workouts', m_id=current_user.get_id()) }}">Visa mina träningspass</a>
             </form>
         </div>
     </div>
