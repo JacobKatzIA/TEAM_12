@@ -66,6 +66,7 @@ def load_user(user_id):
 @app.route('/logout')
 def logout():
   logout_user()
+  session.clear()
   return redirect(url_for('index'))
 
 @app.route('/change_credentials', methods=['GET', 'POST'])
