@@ -227,16 +227,10 @@ def log_meal():
 @app.route('/get_training_log', methods=['POST', 'GET'])
 @login_required
 def get_training_log():
-  if request.method == 'POST':
-    m_id = current_user.id
-    date = request.form['date']
-    exercise_id = request.form['exercise_id']
-    weight = request.form['weight']
-    repetitions = request.form['repetitions']
-    sets = request.form['sets']
+  connection = None
+  cursor = None
     
-    connection = None
-    try:
+  try:
       connection = psycopg2.connect(
         user="ap2204",
         password="if7fupb5",
@@ -245,28 +239,38 @@ def get_training_log():
         database="ap2204"
       )
       cursor = connection.cursor()
+      cursor.execute("SELECT ExerciseID, Name FROM Exercises")
+      workouts = cursor.fetchall()
+      
+      if request.method == 'POST':
+        m_id = current_user.id
+        date = request.form['date']
+        exercise_id = request.form['exercise_id']
+        weight = request.form['weight']
+        repetitions = request.form['repetitions']
+        sets = request.form['sets']
 
-      cursor.execute('INSERT INTO Workouts (m_id, Date) VALUES (%s, %s) RETURNING WorkoutID',
-                     (m_id, date))
-      workout_id =cursor.fetchone()[0]
+        cursor.execute('INSERT INTO Workouts (m_id, Date) VALUES (%s, %s) RETURNING WorkoutID',
+                      (m_id, date))
+        workout_id =cursor.fetchone()[0]
 
       
-      cursor.execute('INSERT INTO WorkoutDetails (WorkoutID, ExerciseID, Weight, Repetitions, Sets) VALUES (%s, %s, %s, %s, %s)',
-                     (workout_id, exercise_id, weight, repetitions, sets))
-      connection.commit()
+        cursor.execute('INSERT INTO WorkoutDetails (WorkoutID, ExerciseID, Weight, Repetitions, Sets) VALUES (%s, %s, %s, %s, %s)',
+                      (workout_id, exercise_id, weight, repetitions, sets))
+        connection.commit()
+        
+        return redirect('/get_training_log')
       
-    except (Exception, psycopg2.Error) as error:
+      return render_template('get_training_log.html', workouts=workouts)
+      
+  except (Exception, psycopg2.Error) as error:
         print("Fel vid inhämtning av träningsloggar:", error)
         return "Kunde inte hämta träningsloggar. Fel: {}".format(error)
-    finally:
-      if connection:
+  finally:
+      if cursor:
         cursor.close()
+      if connection:
         connection.close()
-      return redirect('/get_training_log')
-      
-  else:
-        return render_template('get_training_log.html', workouts=None)
-
 
 @app.route('/view_workouts')
 @login_required

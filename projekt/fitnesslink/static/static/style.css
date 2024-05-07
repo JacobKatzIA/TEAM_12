@@ -6,7 +6,7 @@ h1{
 
 h2{
     text-align: center;
-    color: whitesmoke;
+    color: rgb(0, 0, 0);
 }
 
 p{
@@ -151,7 +151,7 @@ footer > p{
 }
 
 .login h1{
-    color: #000000c1;
+    color: rgb(0, 0, 0);
     text-align: center;
     padding: 0 0 20px 0;
     border-bottom: 1px solid rgb(154, 155, 173);

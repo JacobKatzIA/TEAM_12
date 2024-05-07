@@ -33,7 +33,11 @@
                 </div>
                 <div class="textfield-t">
                     <label for="exercise_id">Övnings-ID:</label>
-                    <input type="text" id="exercise_id" name="exercise_id">
+                    <select id="exercise_id" name="exercise_id">
+                        {% for workout in workouts %}
+                        <option value="{{ workout[0] }}">{{ workout[1] }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="textfield-t">
                     <label for="weight">Vikt:</label>
