@@ -239,6 +239,7 @@ def log_meal():
           cursor.execute("INSERT INTO MealLog (m_id, MealCalorieID, MealDate) VALUES (%s, %s, %s)",
                         (m_id, meal_calorie_id, date))
           connection.commit()
+          flash("Måltid registrerad")
           
           return redirect('/meal')
       
@@ -288,6 +289,7 @@ def get_training_log():
         cursor.execute('INSERT INTO WorkoutDetails (WorkoutID, ExerciseID, Weight, Repetitions, Sets) VALUES (%s, %s, %s, %s, %s)',
                       (workout_id, exercise_id, weight, repetitions, sets))
         connection.commit()
+        flash("Träningspass registrerat")
         
         return redirect('/get_training_log')
       

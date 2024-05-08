@@ -58,6 +58,13 @@
                     <input type="number" id="sets" name="sets">
                 </div>
                 <input type="submit" class="submit-log" value="Logga pass">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
                 <a href="{{ url_for('view_workouts', m_id=current_user.get_id()) }}">Visa mina träningspass</a>
             </form>
         </div>

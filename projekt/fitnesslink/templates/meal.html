@@ -50,6 +50,13 @@
             <input type="date" id="date" name="date" required>
           </div>
           <input type="submit" class="form-submit" value="Logga måltid">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
           <a href="{{ url_for('view_meals', m_id=current_user.get_id()) }}">Visa mina måltider</a>
         </form>
       </div>
