@@ -22,7 +22,10 @@
                 <img src="{{ url_for('static', filename='static/user_icon.png') }}" alt="Profile" onclick="togggleDropdown()">
                 <div class="profile-dropdown" id="dropdown">
                     <a href="/change_credentials">Ändra lösenord</a>
-                    <a href="logout">Logga ut</a>
+                    <a href="{{ url_for('logout') }}" onclick="return confirm('Är du säker på att du vill logga ut?')">Logga ut</a>
+                    <div class="warning">
+                        <a href="{{ url_for('delete_account') }}" class="warning-btn" onclick="return confirm('Är du säker på att du vill radera ditt konto? Detta kan inte ångras.')">Radera konto</a>
+                    </div>
                  </div>
             </div>
             <img src="{{ url_for('static', filename='static/image.fitnesslink.png') }}" alt="Fitnesslink.logo"

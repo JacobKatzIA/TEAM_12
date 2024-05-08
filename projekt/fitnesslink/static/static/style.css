@@ -430,6 +430,17 @@ form[action="/calculate_calories"] {
     text-decoration: none;
 }
 
+.warning{
+    background-color: red;
+    border: 2px solid yellow;
+}
+
+.warning-btn{
+    display: block;
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
 .profile-dropdown a:hover {
     background-color: #f1f1f1;
 }
