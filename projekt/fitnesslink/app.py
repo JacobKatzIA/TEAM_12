@@ -68,34 +68,41 @@ def logout():
   logout_user()
   return redirect(url_for('index'))
 
-@app.route('/delete_account')
+@app.route('/delete_account', methods=['POST'])
 @login_required
 def delete_account():
-  m_id = request.form.get('m_id')
-  if m_id and m_id == current_user.get_id():
-    try:
-      connection = psycopg2.connect(
-        user="ap2204",
-        password="if7fupb5",
-        host="pgserver.mau.se",
-        port="5432",
-        database="ap2204"
+  m_id = current_user.get_id()
+  try:
+    connection = psycopg2.connect(
+      user="ap2204",
+      password="if7fupb5",
+      host="pgserver.mau.se",
+      port="5432",
+      database="ap2204"
     )
-      cursor = connection.cursor()
-      cursor.execute("DELETE FROM members WHERE m_id = %s", (m_id,))
-      connection.commit()
-      logout_user()
-      flash('Ditt konto har raderats.', 'success')
-      return redirect(url_for('index'))
-    except (Exception, psycopg2.Error) as error:
-      print("Fel uppstod vid försök av att radera ett konto: ", error)
-      flash('Kunde inte radera konto.', 'error')
-      return redirect(url_for('start'))
-    finally:
-      if cursor:
-        cursor.close()
-      if connection:
-        connection.close()
+    cursor = connection.cursor()
+    
+    cursor.execute("DELETE FROM meallog WHERE m_id = %s", (m_id,))
+    
+    cursor.execute("DELETE FROM workoutdetails WHERE workoutid IN (SELECT workoutid FROM workouts WHERE m_id = %s)", (m_id,))
+    
+    cursor.execute("DELETE FROM workouts WHERE m_id = %s", (m_id,))
+    
+    cursor.execute("DELETE FROM members WHERE m_id = %s", (m_id,))
+    
+    connection.commit()
+    logout_user()
+    flash('Ditt konto har raderats.', 'success')
+    return redirect(url_for('index'))
+  except (Exception, psycopg2.Error) as error:
+    print("Fel uppstod vid försök av att radera ett konto: ", error)
+    flash('Kunde inte radera konto.', 'error')
+    return redirect(url_for('start'))
+  finally:
+    if cursor:
+      cursor.close()
+    if connection:
+      connection.close()
         
   return redirect(url_for('index'))
 
