@@ -119,7 +119,7 @@
 
                         <input class="form-submit" type="submit" value="Beräkna">
                         {% if calories%}
-                        <p class="black-text">Ditt dagliga kaloribehov är: {{ calories }}</p>
+                        <p class="black-text">Ditt dagliga kaloribehov är: {{ calories | round}}</p>
                         {% endif %}
                     </form>
                 </div>
