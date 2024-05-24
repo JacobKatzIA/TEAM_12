@@ -498,6 +498,11 @@ def calculate_daily_calories(weight, height, age, gender, activity_level):
     return calories
 
 
+@app.route('/recept')
+@login_required
+def recept():
+  return render_template('recept.html', title='Recept', user=current_user)
+
 if __name__ == '__main__':
     app.run(debug=True)
 
