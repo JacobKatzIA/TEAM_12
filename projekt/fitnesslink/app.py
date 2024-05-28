@@ -2,6 +2,7 @@ import psycopg2
 from psycopg2 import Error
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+import re
 
 app = Flask(__name__)
 app.secret_key = 'din_hemliga_nyckel'
@@ -129,6 +130,9 @@ def change_credentials():
 
 
 def update_credentials(current_username, current_password, new_pasword):
+    if not re.match('^(?=.*[A-Z])(?=.*\d.*\d).{6,}$', new_pasword):
+      flash("Lösenordet måste inehålla minst en stor bokstav och två siffror")
+      return False
     try:
       connection = psycopg2.connect(
         user="ap2204",
@@ -160,6 +164,9 @@ def update_credentials(current_username, current_password, new_pasword):
 
 
 def register_member(fullname, username, password, email):
+    if not re.match('^(?=.*[A-Z])(?=.*\d.*\d).{6,}$', password):
+       flash("Lösenordet måste inehålla minst en stor bokstav och två siffror")
+       return False
     try:
         connection = psycopg2.connect(
           user="ap2204",
@@ -209,10 +216,10 @@ def submit():
     username = request.form['username']
     password = request.form['password']
     email = request.form['email']
-    if register_member(fullname, username, password, email):
-       return redirect('/')
+    if not register_member(fullname, username, password, email):
+       return redirect('register_user')
     else:
-       return "Registrering misslyckades"
+       return redirect('/')
 
 
 
