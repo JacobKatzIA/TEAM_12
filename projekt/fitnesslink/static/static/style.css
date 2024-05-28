@@ -450,7 +450,7 @@ table{
 .welcome-text{
     padding: 20px;
     max-width: 800px;
-    margin: 20px 50px;
+    margin: 20px auto;
     line-height: 1.6;
 }
 
