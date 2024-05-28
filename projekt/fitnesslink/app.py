@@ -490,20 +490,95 @@ def calculate_bmr(weight, height, age, gender):
     
 def calculate_daily_calories(weight, height, age, gender, activity_level):
     bmr = calculate_bmr(weight, height, age, gender)
-    if activity_level == 1: ##"Ingen eller lite träning"
+    if activity_level == 1:
         calories = bmr * 1.2
-    elif activity_level == 2: ##"Träning 1-3 dagar i veckan"
+    elif activity_level == 2: 
         calories = bmr * 1.375 
-    elif activity_level == 3: ##"Träning 4-5 dagar i veckan"
+    elif activity_level == 3: 
         calories = bmr * 1.55
-    elif activity_level == 4: ##"Träning 6-7 dagar i veckan"
+    elif activity_level == 4: 
         calories = bmr * 1.725 
-    elif activity_level == 5: ##"Träning 2 ggr/dag (tung träning)"
+    elif activity_level == 5: 
         calories = bmr *1.9
     else:
         raise ValueError("Ogiltig aktivitetsnivå")
     return calories
+  
+def find_user_by_email(email):
+  try:
+      connection = psycopg2.connect(
+        user="ap2204",
+        password="if7fupb5",
+        host="pgserver.mau.se",
+        port="5432",
+        database="ap2204"
+      )
+    
+      cursor = connection.cursor()
+      cursor.execute("SELECT m_id, fullname, username, password, email FROM members WHERE email = %s", (email,))
+      user_data = cursor.fetchone()
+      if user_data:
+        user = {
+          'm_id': user_data[0],
+          'fullname': user_data[1],
+          'username': user_data[2],
+          'password': user_data[3],
+          'email': user_data[4]
+          }
+        return user
+      return None
+  except(Exception, psycopg2.Error) as error:
+    print(f"Fel vid att hitta email: {error}")
+    return None
+  finally:
+    cursor.close()
+  
+@app.route('/reset', methods=['GET', 'POST'])
+def reset_password():
+  if request.method == 'POST':
+    email = request.form['email']
+    user = find_user_by_email(email)
+    if user:
+      return render_template('set_new_password.html', user=user)
+    else:
+      flash("Det finns ingen användare med det angivna e-postadressen.", "error")
+    
+  return render_template('reset.html')
 
+@app.route('/set_new_password', methods=['POST'])
+def set_new_password():
+  new_password = request.form['new_password']
+  user_id = request.form['user_id']
+    
+  try:
+    connection = psycopg2.connect(
+      user="ap2204",
+      password="if7fupb5",
+      host="pgserver.mau.se",
+      port="5432",
+      database="ap2204"
+    )
+    
+    cursor = connection.cursor()
+    cursor.execute("UPDATE members SET password = %s WHERE m_id = %s", (new_password, user_id))
+    connection.commit()
+    flash("Ditt lösenord har ändrats.", "success")
+  except (Exception, psycopg2.Error) as error:
+    print("Fel vid uppdatering av lösenord: ", error)
+    flash('Kunde inte uppdatera lösenordet.', 'error')
+  finally:
+    if cursor:
+      cursor.close()
+    if connection:
+      connection.close()
+  
+  return redirect(url_for('index'))
+
+
+@app.route('/recept')
+@login_required
+def recept():
+  return render_template('recept.html', title='Recept', user=current_user)
 
 if __name__ == '__main__':
     app.run(debug=True)

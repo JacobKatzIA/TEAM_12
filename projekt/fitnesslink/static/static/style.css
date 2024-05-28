@@ -56,7 +56,7 @@ body{
 .nav-logo{
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 70%;
     transform: translate(-50%, -50%);
 }
 
@@ -448,7 +448,6 @@ table{
 }
 
 .welcome-text{
-    font-family: Arial, Helvetica, sans-serif;
     padding: 20px;
     max-width: 800px;
     margin: 20px 50px;
@@ -493,6 +492,77 @@ table{
     color: white;
 }
 
+.clearfix form{
+    margin-right: 30px;
+}
 .start-form{
     margin-bottom: 40px;
+}
+
+.accordion {
+    color:black;
+    display: flex;
+    flex-direction: column;
+}
+
+.according-item {
+    margin-bottom: 20px;
+}
+
+.according-header {
+    background-color: rbga(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: black;
+    width: 100%;
+    text-align: left;
+}
+
+.according-header:hover {
+    background-color: rbga(0, 0, 0, 0.2);
+}
+
+.accordion-buttom {
+    color: black;
+    font-weight: bold;
+}
+
+.accordion-collapse {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.according-body {
+    padding: 10px 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: black;
+}
+
+.accordion.collapse:not(.show) {
+    max-height: 0;
+}
+
+.according-body strong {
+    font-weight: bold;
+    color: black;
+}
+
+.recipe-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.recipe-text {
+    width: 60%;
+}
+
+.recipe-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.accordion-header {
+    margin-top: 10px;
 }
