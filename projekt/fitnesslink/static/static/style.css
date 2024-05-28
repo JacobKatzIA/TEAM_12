@@ -493,6 +493,6 @@ table{
     color: white;
 }
 
-.start-form{
-    margin-bottom: 40px;
+.clearfix form{
+    margin-right: 30px;
 }

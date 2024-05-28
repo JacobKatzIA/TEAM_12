@@ -496,6 +496,76 @@ def calculate_daily_calories(weight, height, age, gender, activity_level):
     else:
         raise ValueError("Ogiltig aktivitetsnivå")
     return calories
+  
+def find_user_by_email(email):
+  try:
+      connection = psycopg2.connect(
+        user="ap2204",
+        password="if7fupb5",
+        host="pgserver.mau.se",
+        port="5432",
+        database="ap2204"
+      )
+    
+      cursor = connection.cursor()
+      cursor.execute("SELECT m_id, fullname, username, password, email FROM members WHERE email = %s", (email,))
+      user_data = cursor.fetchone()
+      if user_data:
+        user = {
+          'm_id': user_data[0],
+          'fullname': user_data[1],
+          'username': user_data[2],
+          'password': user_data[3],
+          'email': user_data[4]
+          }
+        return user
+      return None
+  except(Exception, psycopg2.Error) as error:
+    print(f"Fel vid att hitta email: {error}")
+    return None
+  finally:
+    cursor.close()
+  
+@app.route('/reset', methods=['GET', 'POST'])
+def reset_password():
+  if request.method == 'POST':
+    email = request.form['email']
+    user = find_user_by_email(email)
+    if user:
+      return render_template('set_new_password.html', user=user)
+    else:
+      flash("Det finns ingen användare med det angivna e-postadressen.", "error")
+    
+  return render_template('reset.html')
+
+@app.route('/set_new_password', methods=['POST'])
+def set_new_password():
+  new_password = request.form['new_password']
+  user_id = request.form['user_id']
+    
+  try:
+    connection = psycopg2.connect(
+      user="ap2204",
+      password="if7fupb5",
+      host="pgserver.mau.se",
+      port="5432",
+      database="ap2204"
+    )
+    
+    cursor = connection.cursor()
+    cursor.execute("UPDATE members SET password = %s WHERE m_id = %s", (new_password, user_id))
+    connection.commit()
+    flash("Ditt lösenord har ändrats.", "success")
+  except (Exception, psycopg2.Error) as error:
+    print("Fel vid uppdatering av lösenord: ", error)
+    flash('Kunde inte uppdatera lösenordet.', 'error')
+  finally:
+    if cursor:
+      cursor.close()
+    if connection:
+      connection.close()
+  
+  return redirect(url_for('index'))
 
 
 if __name__ == '__main__':

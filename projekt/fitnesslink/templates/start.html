@@ -19,6 +19,7 @@
                 <li><a href="/get_training_log">Träna</a></li>
                 <li><a href="/meal">Kost</a></li>
             </ul>
+
             <div class="account-icon">
                 <img src="{{ url_for('static', filename='static/user_icon.png') }}" alt="Profile"
                     onclick="togggleDropdown()">
@@ -40,8 +41,72 @@
                 <h3>
                     Här blir du erbjuden en chans till att logga dina pass, kost och mycket mer!
                 </h3>
-
             </section>
+
+            <div class="clearfix">
+                <div class="start-form col-md-6 float-md-start mb-3 ms-md-6">
+                    <div class="form-t">
+                        <form action="/start" method="POST" class="t-log">
+                            <h2 class="form-title">Beräkna ditt dagliga kaloribehov</h2>
+                            <div class="textfield-t">
+                                <label for="weight">Vikt (kg):</label>
+                                <input type="text" id="weight" name="weight" title="Ange vikt i kg (exempel: 70)"
+                                    pattern="[0-9]+" required>
+                            </div>
+                            <div class="textfield-t">
+                                <label for="height">Längd (cm):</label>
+                                <input type="text" id="height" name="height" title="Ange längd i cm (exempel: 175)"
+                                    pattern="[0-9]+" required>
+                            </div>
+                            <div class="textfield-t">
+                                <label for="age">Ålder:</label>
+                                <input type="text" id="age" name="age" title="Ange ålder i år (exempel: 30)"
+                                    pattern="[0-9]+" required><br>
+                            </div>
+                            <div class="radio-area">
+                                <label for="gender">Kön:</label>
+                                <div class="radio">
+                                    <input type="radio" id="male" name="gender" value="MAN" required>
+                                    <label for="male">Man</label>
+                                </div>
+    
+                                <div class="radio">
+                                    <input type="radio" id="female" name="gender" value="KVINNA" required>
+                                    <label for="female">Kvinna</label>
+                                </div>
+                            </div>
+                            <div class="textfield-t">
+                                <label for="activity_level">Aktivitetsnivå:</label>
+                                <select id="activity_level" name="activity_level" required>
+                                    <option value="1">Ingen eller lite träning</option>
+                                    <option value="2">Träning 1-3 dagar i veckan</option>
+                                    <option value="3">Träning 4-5 dagar i veckan</option>
+                                    <option value="4">Träning 6-7 dagar i veckan</option>
+                                    <option value="5">Träning 2 ggr/dag (tung träning)</option>
+                                </select>
+                            </div>
+    
+                            <input class="form-submit" type="submit" value="Beräkna">
+                            {% if calories%}
+                            <p class="black-text">Ditt dagliga kaloribehov är: {{ calories }}</p>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+                <h2>Mifflin St. Jeor</h2>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, iusto.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam tempora culpa saepe unde earum cumque atque aspernatur beatae sed labore.
+                </p>
+                <p>
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam ea dolorum exercitationem accusamus quas quis, placeat asperiores deleniti perferendis animi eveniet id nisi sint! Delectus veniam, nam, illo neque labore non officia explicabo dolorem animi harum repellendus. Quisquam beatae ipsa blanditiis dolor sed laborum, commodi, nulla inventore sunt alias nemo.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente cum nesciunt omnis impedit officia quos libero, asperiores a autem nostrum, repellendus fugiat unde voluptatem modi vero natus itaque iusto corrupti vel ea expedita dicta sunt! Beatae molestias officiis inventore dignissimos?
+                </p>
+            </div>
 
             <div class="clearfix">
                 <img src="{{ url_for('static', filename='static/marklyft.pic.png') }}" class="col-md-6 float-md-end mb-3 ms-md-3 img-thumbnail " alt="marklyft">
@@ -73,55 +138,6 @@
                 <p>
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente cum nesciunt omnis impedit officia quos libero, asperiores a autem nostrum, repellendus fugiat unde voluptatem modi vero natus itaque iusto corrupti vel ea expedita dicta sunt! Beatae molestias officiis inventore dignissimos?
                 </p>
-            </div>
-            <div class="start-form">
-                <div class="form-t">
-                    <form action="/start" method="POST" class="t-log">
-                        <h2 class="form-title">Beräkna ditt dagliga kaloribehov</h2>
-                        <div class="textfield-t">
-                            <label for="weight">Vikt (kg):</label>
-                            <input type="text" id="weight" name="weight" title="Ange vikt i kg (exempel: 70)"
-                                pattern="[0-9]+" required>
-                        </div>
-                        <div class="textfield-t">
-                            <label for="height">Längd (cm):</label>
-                            <input type="text" id="height" name="height" title="Ange längd i cm (exempel: 175)"
-                                pattern="[0-9]+" required>
-                        </div>
-                        <div class="textfield-t">
-                            <label for="age">Ålder:</label>
-                            <input type="text" id="age" name="age" title="Ange ålder i år (exempel: 30)"
-                                pattern="[0-9]+" required><br>
-                        </div>
-                        <div class="radio-area">
-                            <label for="gender">Kön:</label>
-                            <div class="radio">
-                                <input type="radio" id="male" name="gender" value="MAN" required>
-                                <label for="male">Man</label>
-                            </div>
-
-                            <div class="radio">
-                                <input type="radio" id="female" name="gender" value="KVINNA" required>
-                                <label for="female">Kvinna</label>
-                            </div>
-                        </div>
-                        <div class="textfield-t">
-                            <label for="activity_level">Aktivitetsnivå:</label>
-                            <select id="activity_level" name="activity_level" required>
-                                <option value="1">Ingen eller lite träning</option>
-                                <option value="2">Träning 1-3 dagar i veckan</option>
-                                <option value="3">Träning 4-5 dagar i veckan</option>
-                                <option value="4">Träning 6-7 dagar i veckan</option>
-                                <option value="5">Träning 2 ggr/dag (tung träning)</option>
-                            </select>
-                        </div>
-
-                        <input class="form-submit" type="submit" value="Beräkna">
-                        {% if calories%}
-                        <p class="black-text">Ditt dagliga kaloribehov är: {{ calories }}</p>
-                        {% endif %}
-                    </form>
-                </div>
             </div>
 
             <div class="container text-start">
