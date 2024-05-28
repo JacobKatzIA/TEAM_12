@@ -483,15 +483,15 @@ def calculate_bmr(weight, height, age, gender):
     
 def calculate_daily_calories(weight, height, age, gender, activity_level):
     bmr = calculate_bmr(weight, height, age, gender)
-    if activity_level == 1: ##"Ingen eller lite träning"
+    if activity_level == 1:
         calories = bmr * 1.2
-    elif activity_level == 2: ##"Träning 1-3 dagar i veckan"
+    elif activity_level == 2: 
         calories = bmr * 1.375 
-    elif activity_level == 3: ##"Träning 4-5 dagar i veckan"
+    elif activity_level == 3: 
         calories = bmr * 1.55
-    elif activity_level == 4: ##"Träning 6-7 dagar i veckan"
+    elif activity_level == 4: 
         calories = bmr * 1.725 
-    elif activity_level == 5: ##"Träning 2 ggr/dag (tung träning)"
+    elif activity_level == 5: 
         calories = bmr *1.9
     else:
         raise ValueError("Ogiltig aktivitetsnivå")
@@ -567,6 +567,11 @@ def set_new_password():
   
   return redirect(url_for('index'))
 
+
+@app.route('/recept')
+@login_required
+def recept():
+  return render_template('recept.html', title='Recept', user=current_user)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',
+        filename='static/style.css') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">        
+        <title>Recept</title>
+        
+    </head>
+    
+    <body>
+        <div id="container">
+            <nav>
+                <ul>
+                  <li><a href="/start">Hem</a></li>
+                  <li><a href="/get_training_log">Träna</a></li>
+                  <li><a href="/meal">Kost</a></li>
+                </ul>
+                <div class="account-icon">
+                  <img src="{{ url_for('static', filename='static/user_icon.png') }}" alt="Profile"
+                      onclick="togggleDropdown()">
+                  <div class="profile-dropdown" id="dropdown">
+                      <a href="/change_credentials">Ändra lösenord</a>
+                      <a href="{{ url_for('logout') }}"
+                         onclick="return confirm('Är du säker på att du vill logga ut?')">Logga ut</a>
+                      <form action="{{ url_for('delete_account') }}" method="post" onsubmit="return confirm('Är du säker på att du vill radera ditt konto? Detta kan inte ångras.');">
+                          <button type="submit" class="btn btn-danger">Radera Konto</button>
+                      </form>
+                  </div>
+                </div>
+                <img src="{{ url_for('static', filename='static/image.fitnesslink.png') }}" alt="Fitnesslink.logo"
+                  class="nav-logo">
+              </nav>
+
+              <h1>Frukost</h1>            
+                <div class="accordion" id="recipeAccordion">
+                <div class="according-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-buttom" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria aria-controls="collapseOne">
+                            Bananpannkaka
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#recipeAccordion">
+                        <div class="according-body">
+                            <div class="recipe-content">
+                                <div class="recipe-text">                    
+                            <strong> Ingredienser: </strong>
+                            <p>2 mogna bananer
+                            <p>1 ägg
+                            <p>1 dl havregryn</p>
+
+                            <strong> Gör så här: </strong>
+                            <p> 1. Mosa bananerna i en skål.
+                            <p> 2. Vispa äggen och blanda dem med de mosade bananerna.
+                            <p> 3. Tillsätt havregryn i blandningen och rör om väl.
+                            <p> 4. Värm upp en stekpanna med en klick smör och häll smeten i små portioner.
+                            <p> 5. Stek pannkakorna på båda sidorna tills de är gyllenbruna.
+                            <p> 6. Servera med valfria tillbehör som frukt, bär eller honung.
+                                </div>
+                                <div class="recipe-image">
+                                    <img src="{{ url_for('static', filename='static/banan.png') }}" alt="Bananpannkakor">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="according-item">
+            <h2 class="accordion-header">
+                <button class="accordion-buttom collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-controls="collapseTwo">
+                    Chiapudding
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#recipeAccordion">
+                <div class="according-body">
+                    <div class="recipe-content">
+                    <div class="recipe-text">   
+                    <strong> Ingredienser: </strong>
+                    <p> 2 dl havregryn
+                    <p> 2 dl mjölk (valfri sort)
+                    <p> 1 banan
+                    <p> 1 nypa salt</p>
+                    
+                    <strong>Gör så här:</strong>
+                    <p> 1. Blanda havregryn, mjölk och en nypa salt i en burk eller skål.
+                    <p> 2. Skiva upp en banan och tillsätt till blandningen
+                    <p> 3. Ställ burken eller skålen i kylen över natten.
+                    <p> 4. På morgonen är din overnight oats redo att avnjutas!
+                        </div>
+                        <div class="recipe-image">
+                            <img src="{{ url_for('static', filename='static/chiapudding.jpg') }}" alt="Overnight oats">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+            <div class="according-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-buttom collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-controls="collapseThree">
+                        Overnight oats
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#recipeAccordion">
+                    <div class="according-body">
+                        <div class="recipe-content">
+                        <div class="recipe-text">   
+                        <strong> Ingredienser: </strong>
+                        <p> 2 dl havregryn
+                        <p> 2 dl mjölk (valfri sort)
+                        <p> 1 banan
+                        <p> 1 nypa salt</p>
+                        
+                        <strong>Gör så här:</strong>
+                        <p> 1. Blanda havregryn, mjölk och en nypa salt i en burk eller skål.
+                        <p> 2. Skiva upp en banan och tillsätt till blandningen
+                        <p> 3. Ställ burken eller skålen i kylen över natten.
+                        <p> 4. På morgonen är din overnight oats redo att avnjutas!
+                            </div>
+                            <div class="recipe-image">
+                                <img src="{{ url_for('static', filename='static/overnight-oats.jpg') }}" alt="Overnight oats">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <h1>Lunch</h1>
+            <div class ="according-item">
+                <h2 class="accordion-header">
+                    <button class ="accordion-buttom collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-controls="collapseFour">
+                        Omelett
+                    </button>
+                </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#recipeAccordion">
+                        <div class="accordion-body">
+                            <div class="recipe-content">
+                                <div class="recipe-text">   
+                                    <strong> Ingredienser: </strong>
+                                    <p> 3 ägg
+                                    <p> 1 dl mjölk
+                                    <p> 1 msk smör
+                                    <p> Salt och peppar
+                                    <p> Valfri fyllning (t.ex. ost, skinka, champinjoner, grönsaker)</p>
+    
+                                    <strong>Gör så här:</strong>
+                                    <p> 1. Vispa ihop ägg, mjölk, salt och peppar i en skål.
+                                    <p> 2. Smält smöret i en stekpanna på medelhög värme.
+                                    <p> 3. Häll i äggblandningen och låt den stelna något.
+                                    <p> 4. Tillsätt fyllningen på ena halvan av omeletten.
+                                    <p> 5. Vik över de andra halvan och låt omeletten steka tills den blir genomstekt.
+                                </div>
+                                <div class="recipe-image">
+                                    <img src="{{ url_for('static', filename='static/omelett.jpg') }}" alt="Omelett">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class ="according-item">
+                    <h2 class="accordion-header">
+                        <button class ="accordion-buttom collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-controls="collapseFive">
+                            Pastasallad
+                        </button>
+                    </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#recipeAccordion">
+                            <div class="accordion-body">
+                                <div class="recipe-content">
+                                    <div class="recipe-text">   
+                                        <strong> Ingredienser: </strong>
+                                        <p> Kokt pasta (t.ex. penne)
+                                        <p> 1/2 burk Pesto genovese
+                                        <p> Soltorkade tomater
+                                        <p> 200 g Mozzarella
+                                        <p> Oliver
+                                        <p> Ruccula
+                                        <p> Olivolja och balsamicovinäger
+                                        <p> Salt och peppar
+        
+                                        <strong>Gör så här:</strong>
+                                        <p> 1. Blanda samman kokt pasta med pesto i en stor skål.
+                                        <p> 2. Skär soltorkade tomater i mindre bitar och tillsätt dem tillsammans med ruccola, oliver och mozzarella i skålen.
+                                        <p> 3. Ringla över olivolja och balsamicovinäger och pastasalladen är redo att serveras.
+                                    </div>
+                                    <div class="recipe-image">
+                                        <img src="{{ url_for('static', filename='static/pasta_sallad.png') }}" alt="Omelett">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+            <div class="according-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-buttom collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-controls="collapseSix">
+                        Kycklingwraps
+                    </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#recipeAccordion">
+                    <div class="according-body">
+                        <div class="recipe-content">
+                        <div class="recipe-text">   
+                        <strong> Ingredienser: </strong>
+                        <p> 4 tortillabröd
+                        <p> 2 kycklingbröstfiléer
+                        <p> 1 avokado, skivad
+                        <p> 1/2 rödlök, skivad
+                        <p> Strimlad sallad
+                        <p> Salt och peppar efter smak
+                        <p> Eventuella tillbehör som gräddfil, salsa eller guacamole</p>
+                        
+                        <strong>Gör så här:</strong>
+                        <p> 1. Stek kycklingbröstfiléer tills de är genomstekta. Krydda med salt och peppar efter smak. Skär sedan i skivor eller tärningar.
+                        <p> 2. Värm tortillabröden enligt anvisningar på förpackningen.
+                        <p> 3. På varje tortillabröd, placera ett lager med strimlad sallad, följt av skivad avokado och rödlök.
+                        <p> 4. Lägg på de stekta kycklingbitarna.
+                        <p> 5. Vik in sidorna på tortillabrödet och rulla ihop det till en wrap.
+                        <p> 6. Servera med eventuella tillbehöv som gräddfil, salsa eller guacamole på sidan.
+                            </div>
+                            <div class="recipe-image">
+                                <img src="{{ url_for('static', filename='static/kycklingwrap.jpg') }}" alt="Overnight oats">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+            <h1>Middag</h1>
+            <div class="according-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-buttom collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-controls="collapseSeven">
+                        Linsgryta
+                    </button>
+                </h2>
+                <div id="collapseSeven" class="accordion-collapse collapse" data-bs-parent="#recipeAccordion">
+                    <div class="according-body">
+                        <div class="recipe-content">
+                        <div class="recipe-text">   
+                        <strong> Ingredienser: </strong>
+                        <p> 3 dl röda linser
+                        <p> 1 lök, hackad
+                        <p> 1 vitlöksklyftor, finhackade
+                        <p> 2 morötter, skivde
+                        <p> 400 g krossade tomater
+                        <p> 1 grönsaksbuljongtärning
+                        <p> Salt och peppar efter smak
+                        <p> Oliivolja för stekning
+                        <p> Färsk persilja eller koriander för garnering (valfritt)</p>
+                        
+                        <strong>Gör så här:</strong>
+                        <p> 1. Skölj linserna under kallt vatten och låt dem rinna av.
+                        <p> 2. Hetta upp olivolja i en stor kastrull på medelhög värme. Tillsätt lök och vitlök och stek tills löken är mjuk och genomskinlig, cirka 5 minuter.
+                        <p> 3. Tillsätt mortötter, krossade tomater och grönsaksbuljong och rör om väl.
+                        <p> 4. Låt grytan koka upp och lägg sedan i de sköjda linserna. Sänk värmen till låg och låt grytan småkoka under lock i cirka 20-25 minuter, eller tills linserna är mjuka och grytan har tjocknat.
+                        <p> 5. Smaka av med salt och peppar.
+                        <p> 6. Servera varm, med ris och garnera gärna med färsk persilja eller koriander om så önskas.
+                            </div>
+                            <div class="recipe-image">
+                                <img src="{{ url_for('static', filename='static/linsgryta.jpg') }}" alt="Linsgryta">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="according-item">
+            <h2 class="accordion-header">
+                <button class="accordion-buttom collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-controls="collapseEight">
+                    Krämig köttfärssås med ris
+                </button>
+            </h2>
+            <div id="collapseEight" class="accordion-collapse collapse" data-bs-parent="#recipeAccordion">
+                <div class="according-body">
+                    <div class="recipe-content">
+                    <div class="recipe-text">   
+                    <strong> Ingredienser: </strong>
+                    <p> 1 gul lök
+                    <p> 2 vitlöksklyftor
+                    <p> 1 msk olivolja
+                    <p> 500 g nötfärs
+                    <p> 2 dl vatten
+                    <p> 1,5 dl crème fraîche
+                    <p> 1 msk köttfond
+                    <p> Salt och peppar efter smak
+                    <p> Tillbehör: 3 dl ris
+                    </p>
+                    
+                    <strong>Gör så här:</strong>
+                    <p> 1. Tillbehör: Koka ris enlgt anvisning på förpackningen.
+                    <p> 2. Köttfärssås: Skala och finhacka lök och vitkök. Hätta upp olja i en stekpanna och fräs lök och nötfärs tills färsen är helt genomstekt.                    <p> 3. Tillsätt mortötter, krossade tomater och grönsaksbuljong och rör om väl.
+                    <p> 4. Tillsätt vatten, crème fraîch, köttfond, salt och peppar. Låt köttfärssåsen koka ihop ca 5-7 min.
+                    <p> 5. Servera köttfärssåsen tillsammans med ris.
+                        </div>
+                        <div class="recipe-image">
+                            <img src="{{ url_for('static', filename='static/köttfärs_ris.jpg') }}" alt="Köttfärs med ris">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <h1>Snacks</h1>
+            <div class="according-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-buttom collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-controls="collapseNine">
+                        Dadelbollar
+                    </button>
+                </h2>
+                <div id="collapseNine" class="accordion-collapse collapse" data-bs-parent="#recipeAccordion">
+                    <div class="according-body">
+                        <div class="recipe-content">
+                        <div class="recipe-text">   
+                        <strong> Ingredienser: </strong>
+                        <p> 16 st färska dadlar
+                        <p> 3 dl havregryn
+                        <p> 1 dl kokosflingor
+                        <p> 2 msk kakao
+                        <p> 0,5 dl kokosolja
+                        <p> 2 msk starkt bryggkaffe
+                        <p> 1,5 msk vatten
+                        <p> Välj mellan strössel, kokosflingor eller hackade nötter som topping<p/>
+
+                        <strong>Gör så här:</strong>
+                        <p> 1. Plocka ut kärnorna ur dadlarna. Lägg dadlarna i en matberedare. Häll i havragryn, kokosflingor och kokosolja.
+                        <p> 2. Tillsätt starkt bryggkaffe och ev. vatten om det är för torrt. Mixa ihop till en slät massa.
+                        <p> 3. Forma till runda bollar med lätt fuktade händer. 
+                        <p> 4. Rulla i valfritt strössel, kokosflingor eller hackade nötter.
+                            </div>
+                            <div class="recipe-image">
+                                <img src="{{ url_for('static', filename='static/dadelboll.png') }}" alt="Overnight oats">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class ="according-item">
+            <h2 class="accordion-header">
+                <button class ="accordion-buttom collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-controls="collapseTen">
+                    Smoothie
+                </button>
+            </h2>
+                <div id="collapseTen" class="accordion-collapse collapse" data-bs-parent="#recipeAccordion">
+                    <div class="accordion-body">
+                        <div class="recipe-content">
+                            <div class="recipe-text">   
+                                <strong> Ingredienser: </strong>
+                                <p> 1 banan
+                                <p> 1 dl frysta bär (t.ex. blåbär, hallon)
+                                <p> 1 dl yoghurt
+                                <p> 1 dl mjölk eller juice </p>
+
+                                <strong>Gör så här:</strong>
+                                <p> 1. Lägg alla ingredienser i en mixer.
+                                <p> 2. Mixa tills smoothien är slät.
+                                <p> 3. Häll upp i ett glas och njut!
+                            </div>
+                            <div class="recipe-image">
+                                <img src="{{ url_for('static', filename='static/smoothie.jpg') }}" alt="Smoothie">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        </div>
+        </div>
+</body>
+</html>
